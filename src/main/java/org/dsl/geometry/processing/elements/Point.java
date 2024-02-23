@@ -1,9 +1,9 @@
 package org.dsl.geometry.processing.elements;
 
+import java.awt.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import processing.core.PApplet;
 
 @Getter
 @Setter
@@ -19,7 +19,8 @@ public class Point {
     this.id = id;
   }
 
-  public void draw(PApplet p) {
-    p.ellipse(x, y, 5, 5);
+  public void draw(Graphics2D g) {
+    g.setColor(Color.BLACK);
+    g.fillOval((int) (x - 2), (int) (y - 2), 4, 4);
   }
 }

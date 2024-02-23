@@ -1,6 +1,6 @@
 package org.dsl.geometry.processing.elements;
 
-import processing.core.PApplet;
+import java.awt.*;
 
 public class Line {
   private final Point start;
@@ -11,7 +11,12 @@ public class Line {
     this.end = end;
   }
 
-  public void draw(PApplet p) {
-    p.line(start.getX(), start.getY(), end.getX(), end.getY());
+  public void draw(Graphics2D g) {
+    g.setColor(Color.BLACK);
+    g.drawLine(
+        (int) start.getX(),
+        (int) start.getY(),
+        (int) end.getX(),
+        (int) end.getY()); // Пример рисования линии
   }
 }
