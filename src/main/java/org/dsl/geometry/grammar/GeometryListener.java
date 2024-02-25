@@ -8,6 +8,56 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface GeometryListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link GeometryParser#functionCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionCall(GeometryParser.FunctionCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#functionCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionCall(GeometryParser.FunctionCallContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#areaFunction}.
+	 * @param ctx the parse tree
+	 */
+	void enterAreaFunction(GeometryParser.AreaFunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#areaFunction}.
+	 * @param ctx the parse tree
+	 */
+	void exitAreaFunction(GeometryParser.AreaFunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#perimeterFunction}.
+	 * @param ctx the parse tree
+	 */
+	void enterPerimeterFunction(GeometryParser.PerimeterFunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#perimeterFunction}.
+	 * @param ctx the parse tree
+	 */
+	void exitPerimeterFunction(GeometryParser.PerimeterFunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#lengthFunction}.
+	 * @param ctx the parse tree
+	 */
+	void enterLengthFunction(GeometryParser.LengthFunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#lengthFunction}.
+	 * @param ctx the parse tree
+	 */
+	void exitLengthFunction(GeometryParser.LengthFunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#figureID}.
+	 * @param ctx the parse tree
+	 */
+	void enterFigureID(GeometryParser.FigureIDContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#figureID}.
+	 * @param ctx the parse tree
+	 */
+	void exitFigureID(GeometryParser.FigureIDContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GeometryParser#program}.
 	 * @param ctx the parse tree
 	 */
@@ -127,6 +177,16 @@ public interface GeometryListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitEllipseDeclaration(GeometryParser.EllipseDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#rhombusDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterRhombusDeclaration(GeometryParser.RhombusDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#rhombusDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitRhombusDeclaration(GeometryParser.RhombusDeclarationContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GeometryParser#variableDeclaration}.
 	 * @param ctx the parse tree
