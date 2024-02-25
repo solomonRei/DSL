@@ -58,4 +58,25 @@ public class FigureFactory {
   public static Drawable createTriangle(double side1, double side2, double side3) {
     return new Triangle(side1, side2, side3);
   }
+
+  /**
+   * Method for creating equilateral triangle.
+   *
+   * @param side side
+   * @return triangle
+   */
+  public static Triangle createEquilateralTriangle(double side) {
+    return new Triangle(side, true);
+  }
+
+  /**
+   * Method for creating isosceles triangle.
+   *
+   * @param base base
+   * @param leg leg
+   * @return triangle
+   */
+  public static Triangle createIsoscelesTriangle(double base, double leg) {
+    return new Triangle(base, leg);
+  }
 }
