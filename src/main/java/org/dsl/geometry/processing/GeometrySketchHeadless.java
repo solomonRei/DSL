@@ -7,9 +7,6 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import org.dsl.geometry.processing.elements.Drawable;
-import org.dsl.geometry.processing.elements.impl.Line;
-import org.dsl.geometry.processing.elements.impl.Point;
-import org.dsl.geometry.processing.elements.impl.Triangle;
 
 /** GeometrySketchHeadless class. */
 @Getter
@@ -32,7 +29,7 @@ public class GeometrySketchHeadless {
     g2.fillRect(0, 0, width, height);
 
     for (Drawable obj : figures) {
-      obj.draw(g2); // Прямой вызов draw без проверки типа
+      obj.draw(g2);
     }
 
     g2.dispose();

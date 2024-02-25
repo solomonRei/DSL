@@ -11,9 +11,9 @@ import org.dsl.geometry.processing.utils.Utils;
 @Setter
 @ToString
 public class Triangle implements Drawable {
-  private final double side1;
-  private final double side2;
-  private final double side3;
+  private double side1;
+  private double side2;
+  private double side3;
   private Point p1;
   private Point p2;
   private Point p3;
@@ -35,6 +35,21 @@ public class Triangle implements Drawable {
     this.side1 = Utils.calculateDistance(p1, p2);
     this.side2 = Utils.calculateDistance(p2, p3);
     this.side3 = Utils.calculateDistance(p3, p1);
+  }
+
+  public Triangle(final double side, final boolean isEquilateral) {
+    if (isEquilateral) {
+      this.p1 = new Point(0, 0, "p1");
+      this.p2 = new Point((float) side, 0, "p2");
+      this.p3 = new Point((float) (side / 2), (float) (side * Math.sqrt(3) / 2), "p3");
+    }
+  }
+
+  public Triangle(final double base, final double leg) {
+    double h = Math.sqrt(leg * leg - (base / 2) * (base / 2));
+    this.p1 = new Point(0, 0, "p1");
+    this.p2 = new Point((float) base, 0, "p2");
+    this.p3 = new Point((float) (base / 2), (float) h, "p3");
   }
 
   public boolean isValidTriangle() {
