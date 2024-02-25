@@ -8,6 +8,7 @@ import org.dsl.geometry.grammar.GeometryBaseListener;
 import org.dsl.geometry.grammar.GeometryParser;
 import org.dsl.geometry.processing.elements.Line;
 import org.dsl.geometry.processing.elements.Point;
+import org.dsl.geometry.processing.elements.Triangle;
 
 /** Custom listener for parsing geometry language. */
 @Slf4j
@@ -30,7 +31,7 @@ public class CustomListener extends GeometryBaseListener {
     Point point = new Point(x, y, id);
     figures.add(point);
 
-    log.info("Добавлена точка: " + point + " с идентификатором " + id);
+    log.info("Добавлена точка: {} с идентификатором {}", point, id);
   }
 
   /**
@@ -53,6 +54,39 @@ public class CustomListener extends GeometryBaseListener {
       log.info("Добавлена линия: " + line);
     } else {
       log.error("Одна из точек для линии не найдена.");
+    }
+  }
+
+  /**
+   * Method for entering triangle declaration.
+   *
+   * @param ctx context
+   */
+  @Override
+  public void enterTriangleDeclaration(GeometryParser.TriangleDeclarationContext ctx) {
+    Triangle triangle;
+    if (ctx.point().size() == 3) {
+      Point p1 = findPointById(ctx.point(0).ID().getText());
+      Point p2 = findPointById(ctx.point(1).ID().getText());
+      Point p3 = findPointById(ctx.point(2).ID().getText());
+      if (p1 != null && p2 != null && p3 != null) {
+        triangle = new Triangle(p1, p2, p3);
+      } else {
+        log.error("Одна из точек для треугольника не найдена.");
+        return;
+      }
+    } else {
+      double side1 = Double.parseDouble(ctx.NUM(0).getText());
+      double side2 = Double.parseDouble(ctx.NUM(1).getText());
+      double side3 = Double.parseDouble(ctx.NUM(2).getText());
+      triangle = new Triangle(side1, side2, side3);
+    }
+
+    if (triangle.isValidTriangle()) {
+      figures.add(triangle);
+      log.info("Добавлен треугольник: {}", triangle);
+    } else {
+      log.error("Невозможно создать треугольник с заданными сторонами.");
     }
   }
 

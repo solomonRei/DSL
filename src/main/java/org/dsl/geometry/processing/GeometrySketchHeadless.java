@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.dsl.geometry.processing.elements.Line;
 import org.dsl.geometry.processing.elements.Point;
+import org.dsl.geometry.processing.elements.Triangle;
 
 /** GeometrySketchHeadless class. */
 @Getter
@@ -34,6 +35,8 @@ public class GeometrySketchHeadless {
         ((Point) obj).draw(g2);
       } else if (obj instanceof Line) {
         ((Line) obj).draw(g2);
+      } else if (obj instanceof Triangle) {
+        ((Triangle) obj).draw(g2);
       }
     }
 

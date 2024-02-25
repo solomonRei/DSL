@@ -17,6 +17,6 @@ public class Line {
         (int) start.getX(),
         (int) start.getY(),
         (int) end.getX(),
-        (int) end.getY()); // Пример рисования линии
+        (int) end.getY());
   }
 }

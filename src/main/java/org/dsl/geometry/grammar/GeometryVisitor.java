@@ -11,6 +11,36 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface GeometryVisitor<T> extends ParseTreeVisitor<T> {
 	/**
+	 * Visit a parse tree produced by {@link GeometryParser#functionCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionCall(GeometryParser.FunctionCallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#areaFunction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAreaFunction(GeometryParser.AreaFunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#perimeterFunction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPerimeterFunction(GeometryParser.PerimeterFunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#lengthFunction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLengthFunction(GeometryParser.LengthFunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#figureID}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFigureID(GeometryParser.FigureIDContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link GeometryParser#program}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -82,6 +112,12 @@ public interface GeometryVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitEllipseDeclaration(GeometryParser.EllipseDeclarationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#rhombusDeclaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRhombusDeclaration(GeometryParser.RhombusDeclarationContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GeometryParser#variableDeclaration}.
 	 * @param ctx the parse tree
