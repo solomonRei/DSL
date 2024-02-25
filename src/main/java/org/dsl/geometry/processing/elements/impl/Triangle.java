@@ -1,15 +1,16 @@
-package org.dsl.geometry.processing.elements;
+package org.dsl.geometry.processing.elements.impl;
 
 import java.awt.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.dsl.geometry.processing.elements.Drawable;
 import org.dsl.geometry.processing.utils.Utils;
 
 @Getter
 @Setter
 @ToString
-public class Triangle {
+public class Triangle implements Drawable {
   private final double side1;
   private final double side2;
   private final double side3;
@@ -40,6 +41,7 @@ public class Triangle {
     return side1 + side2 > side3 && side1 + side3 > side2 && side2 + side3 > side1;
   }
 
+  @Override
   public void draw(final Graphics2D g) {
     new Line(p1, p2).draw(g);
     new Line(p2, p3).draw(g);

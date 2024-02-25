@@ -6,15 +6,16 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import org.dsl.geometry.processing.elements.Line;
-import org.dsl.geometry.processing.elements.Point;
-import org.dsl.geometry.processing.elements.Triangle;
+import org.dsl.geometry.processing.elements.Drawable;
+import org.dsl.geometry.processing.elements.impl.Line;
+import org.dsl.geometry.processing.elements.impl.Point;
+import org.dsl.geometry.processing.elements.impl.Triangle;
 
 /** GeometrySketchHeadless class. */
 @Getter
 @Setter
 public class GeometrySketchHeadless {
-  private List<Object> figures;
+  private List<Drawable> figures;
 
   /**
    * Method to create an image.
@@ -30,14 +31,8 @@ public class GeometrySketchHeadless {
     g2.setColor(Color.WHITE);
     g2.fillRect(0, 0, width, height);
 
-    for (Object obj : figures) {
-      if (obj instanceof Point) {
-        ((Point) obj).draw(g2);
-      } else if (obj instanceof Line) {
-        ((Line) obj).draw(g2);
-      } else if (obj instanceof Triangle) {
-        ((Triangle) obj).draw(g2);
-      }
+    for (Drawable obj : figures) {
+      obj.draw(g2); // Прямой вызов draw без проверки типа
     }
 
     g2.dispose();

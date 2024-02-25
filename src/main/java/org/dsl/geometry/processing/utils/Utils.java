@@ -1,7 +1,7 @@
 package org.dsl.geometry.processing.utils;
 
 import java.util.UUID;
-import org.dsl.geometry.processing.elements.Point;
+import org.dsl.geometry.processing.elements.impl.Point;
 
 public class Utils {
 

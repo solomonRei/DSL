@@ -6,16 +6,17 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.dsl.geometry.grammar.GeometryBaseListener;
 import org.dsl.geometry.grammar.GeometryParser;
-import org.dsl.geometry.processing.elements.Line;
-import org.dsl.geometry.processing.elements.Point;
-import org.dsl.geometry.processing.elements.Triangle;
+import org.dsl.geometry.processing.elements.Drawable;
+import org.dsl.geometry.processing.elements.impl.Line;
+import org.dsl.geometry.processing.elements.impl.Point;
+import org.dsl.geometry.processing.elements.impl.Triangle;
 
 /** Custom listener for parsing geometry language. */
 @Slf4j
 @Getter
 public class CustomListener extends GeometryBaseListener {
 
-  private final List<Object> figures = new ArrayList<>();
+  private final List<Drawable> figures = new ArrayList<>();
 
   /**
    * Method for entering point declaration.
@@ -97,7 +98,7 @@ public class CustomListener extends GeometryBaseListener {
    * @return point
    */
   private Point findPointById(String id) {
-    for (Object figure : figures) {
+    for (Drawable figure : figures) {
       if (figure instanceof Point) {
         Point point = (Point) figure;
         if (point.getId().equals(id)) {
