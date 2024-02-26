@@ -6,6 +6,7 @@ PLUS: '+';
 MINUS: '-';
 MUL: '*';
 DIV: '/';
+ARROW: '->';
 
 // Определение токенов
 POINT: 'Point';
@@ -20,8 +21,12 @@ PARALLELOGRAM: 'Parallelogram';
 CIRCLE: 'Circle';
 ELLIPSE: 'Ellipse';
 RHOMBUS: 'Rhombus';
+BISECTOR: 'bisector';
+ANGLE: 'Angle';
+VERTEX: 'Vertex';
 NUM: [0-9]+('.'[0-9]+)?;
 ID: [a-zA-Z][a-zA-Z0-9]*;
+ALIAS: [a-zA-Z][a-zA-Z0-9]* ':';
 WS: [ \t\r\n]+ -> skip;
 SEMICOLON: ';';
 COMMA: ',';
@@ -30,27 +35,17 @@ RPAREN: ')';
 TRUE: 'true';
 FALSE: 'false';
 STRING: '"' ('\\' . | ~('\\' | '"'))* '"';
-COMMENT: '//' ~[\r\n]* -> skip;
+COMMENT: '//' ~[\r\n]*;
 ML_COMMENT: '/*' .*? '*/' -> skip;
 
-// Добавляем новые правила для функций расчета
-functionCall: areaFunction
-            | perimeterFunction
-            | lengthFunction;
-
-areaFunction: 'area' LPAREN figureID RPAREN;
-perimeterFunction: 'perimeter' LPAREN figureID RPAREN;
-lengthFunction: 'length' LPAREN figureID RPAREN;
-
-figureID: ID;
-
-
 // Правила
-program: (statement)+;
+program: (statement | commentStatement)+;
 
 statement: figureDeclaration SEMICOLON
          | variableDeclaration SEMICOLON
          | comment;
+
+commentStatement: COMMENT;
 
 figureDeclaration: pointDeclaration
                  | lineDeclaration
@@ -65,10 +60,24 @@ figureDeclaration: pointDeclaration
 pointDeclaration: POINT ID LPAREN NUM COMMA NUM RPAREN;
 lineDeclaration: LINE ID LPAREN point COMMA point RPAREN;
 segmentDeclaration: SEGMENT ID LPAREN point COMMA point RPAREN;
-triangleDeclaration: TRIANGLE ID LPAREN point COMMA point COMMA point RPAREN
-                    | TRIANGLE ID LPAREN NUM COMMA NUM COMMA NUM RPAREN
-                    | EQUILATERAL_TRIANGLE ID LPAREN NUM RPAREN
-                    | ISOSCELES_TRIANGLE ID LPAREN NUM COMMA NUM RPAREN;
+triangleDeclaration
+    : TRIANGLE ID LPAREN point COMMA point COMMA point RPAREN (ARROW triangleProperty)*
+    | TRIANGLE ID LPAREN aliasVertex COMMA aliasVertex COMMA aliasVertex RPAREN (ARROW triangleProperty)*
+    | TRIANGLE ID LPAREN NUM COMMA NUM COMMA NUM RPAREN (ARROW triangleProperty)*
+    | EQUILATERAL_TRIANGLE ID LPAREN NUM RPAREN (ARROW triangleProperty)*
+    | ISOSCELES_TRIANGLE ID LPAREN NUM COMMA NUM RPAREN (ARROW triangleProperty)*
+    ;
+
+aliasVertex
+    : ID ':' NUM
+    ;
+
+ triangleProperty: bisectorDeclaration
+                  | angleDeclaration;
+
+ bisectorDeclaration: BISECTOR LPAREN ID RPAREN;
+ angleDeclaration: ANGLE LPAREN ID COMMA NUM RPAREN;
+
 squareDeclaration: SQUARE ID LPAREN NUM RPAREN
                   | SQUARE ID 'side' EQUAL NUM SEMICOLON;
 rectangleDeclaration: RECTANGLE ID LPAREN NUM COMMA NUM RPAREN

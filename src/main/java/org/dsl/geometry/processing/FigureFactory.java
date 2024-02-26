@@ -1,6 +1,5 @@
 package org.dsl.geometry.processing;
 
-import org.dsl.geometry.processing.elements.Drawable;
 import org.dsl.geometry.processing.elements.impl.Line;
 import org.dsl.geometry.processing.elements.impl.Point;
 import org.dsl.geometry.processing.elements.impl.Triangle;
@@ -55,7 +54,7 @@ public class FigureFactory {
    * @param side3 third side
    * @return triangle
    */
-  public static Drawable createTriangle(double side1, double side2, double side3) {
+  public static Triangle createTriangle(double side1, double side2, double side3) {
     return new Triangle(side1, side2, side3);
   }
 

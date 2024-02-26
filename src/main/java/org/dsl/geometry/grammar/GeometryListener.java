@@ -8,56 +8,6 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface GeometryListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link GeometryParser#functionCall}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionCall(GeometryParser.FunctionCallContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GeometryParser#functionCall}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionCall(GeometryParser.FunctionCallContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link GeometryParser#areaFunction}.
-	 * @param ctx the parse tree
-	 */
-	void enterAreaFunction(GeometryParser.AreaFunctionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GeometryParser#areaFunction}.
-	 * @param ctx the parse tree
-	 */
-	void exitAreaFunction(GeometryParser.AreaFunctionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link GeometryParser#perimeterFunction}.
-	 * @param ctx the parse tree
-	 */
-	void enterPerimeterFunction(GeometryParser.PerimeterFunctionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GeometryParser#perimeterFunction}.
-	 * @param ctx the parse tree
-	 */
-	void exitPerimeterFunction(GeometryParser.PerimeterFunctionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link GeometryParser#lengthFunction}.
-	 * @param ctx the parse tree
-	 */
-	void enterLengthFunction(GeometryParser.LengthFunctionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GeometryParser#lengthFunction}.
-	 * @param ctx the parse tree
-	 */
-	void exitLengthFunction(GeometryParser.LengthFunctionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link GeometryParser#figureID}.
-	 * @param ctx the parse tree
-	 */
-	void enterFigureID(GeometryParser.FigureIDContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GeometryParser#figureID}.
-	 * @param ctx the parse tree
-	 */
-	void exitFigureID(GeometryParser.FigureIDContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link GeometryParser#program}.
 	 * @param ctx the parse tree
 	 */
@@ -77,6 +27,16 @@ public interface GeometryListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStatement(GeometryParser.StatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#commentStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterCommentStatement(GeometryParser.CommentStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#commentStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitCommentStatement(GeometryParser.CommentStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GeometryParser#figureDeclaration}.
 	 * @param ctx the parse tree
@@ -127,6 +87,46 @@ public interface GeometryListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTriangleDeclaration(GeometryParser.TriangleDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#aliasVertex}.
+	 * @param ctx the parse tree
+	 */
+	void enterAliasVertex(GeometryParser.AliasVertexContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#aliasVertex}.
+	 * @param ctx the parse tree
+	 */
+	void exitAliasVertex(GeometryParser.AliasVertexContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#triangleProperty}.
+	 * @param ctx the parse tree
+	 */
+	void enterTriangleProperty(GeometryParser.TrianglePropertyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#triangleProperty}.
+	 * @param ctx the parse tree
+	 */
+	void exitTriangleProperty(GeometryParser.TrianglePropertyContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#bisectorDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterBisectorDeclaration(GeometryParser.BisectorDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#bisectorDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitBisectorDeclaration(GeometryParser.BisectorDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#angleDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterAngleDeclaration(GeometryParser.AngleDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#angleDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitAngleDeclaration(GeometryParser.AngleDeclarationContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GeometryParser#squareDeclaration}.
 	 * @param ctx the parse tree
