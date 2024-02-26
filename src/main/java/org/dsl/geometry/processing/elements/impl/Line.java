@@ -21,5 +21,8 @@ public class Line implements Drawable {
         (int) start.getY(),
         (int) end.getX(),
         (int) end.getY());
+
+    start.draw(g);
+    end.draw(g);
   }
 }
