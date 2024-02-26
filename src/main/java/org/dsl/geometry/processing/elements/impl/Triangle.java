@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -32,10 +31,10 @@ public class Triangle implements Drawable {
     this.side1 = side1;
     this.side2 = side2;
     this.side3 = side3;
-    this.p1 = new Point(0, 0, Utils.generateRandomId());
-    this.p2 = new Point((float) side1, 0, Utils.generateRandomId());
+    this.p1 = new Point(Utils.getInitialCoordinateX(), Utils.getInitialCoordinateY(), Utils.generateRandomId());
+    this.p2 = new Point((float) side1, Utils.getInitialCoordinateX(), Utils.generateRandomId());
     this.p3 =
-        new Point(0, (float) Math.sqrt(side2 * side2 - side1 * side1), Utils.generateRandomId());
+        new Point(Utils.getInitialCoordinateX(), (float) Math.sqrt(side2 * side2 - side1 * side1), Utils.generateRandomId());
     fillVerticesMap();
   }
 
@@ -51,8 +50,8 @@ public class Triangle implements Drawable {
 
   public Triangle(final double side, final boolean isEquilateral) {
     if (isEquilateral) {
-      this.p1 = new Point(0, 0, Utils.generateRandomId());
-      this.p2 = new Point((float) side, 0, Utils.generateRandomId());
+      this.p1 = new Point(Utils.getInitialCoordinateX(), Utils.getInitialCoordinateY(), Utils.generateRandomId());
+      this.p2 = new Point((float) side, Utils.getInitialCoordinateY(), Utils.generateRandomId());
       this.p3 =
           new Point(
               (float) (side / 2), (float) (side * Math.sqrt(3) / 2), Utils.generateRandomId());
@@ -62,8 +61,8 @@ public class Triangle implements Drawable {
 
   public Triangle(final double base, final double leg) {
     double h = Math.sqrt(leg * leg - (base / 2) * (base / 2));
-    this.p1 = new Point(0, 0, Utils.generateRandomId());
-    this.p2 = new Point((float) base, 0, Utils.generateRandomId());
+    this.p1 = new Point(Utils.getInitialCoordinateX(), Utils.getInitialCoordinateY(), Utils.generateRandomId());
+    this.p2 = new Point((float) base, Utils.getInitialCoordinateY(), Utils.generateRandomId());
     this.p3 = new Point((float) (base / 2), (float) h, Utils.generateRandomId());
     fillVerticesMap();
   }

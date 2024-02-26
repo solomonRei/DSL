@@ -69,8 +69,7 @@ triangleDeclaration
     ;
 
 aliasVertex
-    : ID ':' NUM
-    ;
+    : ID':'NUM;
 
  triangleProperty: bisectorDeclaration
                   | angleDeclaration;

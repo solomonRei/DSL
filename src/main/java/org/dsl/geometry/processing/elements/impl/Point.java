@@ -24,5 +24,6 @@ public class Point implements Drawable {
   public void draw(Graphics2D g) {
     g.setColor(Color.BLACK);
     g.fillOval((int) (x - 2), (int) (y - 2), 4, 4);
+    g.drawString(id, x + 5, y - 5);
   }
 }

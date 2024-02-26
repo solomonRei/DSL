@@ -1,7 +1,9 @@
 package org.dsl.geometry;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.dsl.geometry.grammar.GeometryBaseListener;
@@ -66,9 +68,19 @@ public class CustomListener extends GeometryBaseListener {
    */
   @Override
   public void enterTriangleDeclaration(GeometryParser.TriangleDeclarationContext ctx) {
+    Map<String, Float> aliases = new HashMap<>();
     Triangle triangle;
 
-    if (ctx.point().size() == 3) {
+    if (!ctx.aliasVertex().isEmpty()) {
+      ctx.aliasVertex()
+          .forEach(
+              aliasCtx -> {
+                String alias = aliasCtx.ID().getText();
+                float value = Float.parseFloat(aliasCtx.NUM().getText());
+                aliases.put(alias, value);
+              });
+      triangle = FigureFactory.createTriangleWithAliases(aliases);
+    } else if (ctx.point().size() == 3) {
       Point p1 = findPointById(ctx.point(0).ID().getText());
       Point p2 = findPointById(ctx.point(1).ID().getText());
       Point p3 = findPointById(ctx.point(2).ID().getText());

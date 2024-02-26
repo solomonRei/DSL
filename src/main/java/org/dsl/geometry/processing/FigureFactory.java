@@ -3,6 +3,10 @@ package org.dsl.geometry.processing;
 import org.dsl.geometry.processing.elements.impl.Line;
 import org.dsl.geometry.processing.elements.impl.Point;
 import org.dsl.geometry.processing.elements.impl.Triangle;
+import org.dsl.geometry.processing.utils.Utils;
+
+import java.util.Iterator;
+import java.util.Map;
 
 /** Factory for creating figures. */
 public class FigureFactory {
@@ -77,5 +81,29 @@ public class FigureFactory {
    */
   public static Triangle createIsoscelesTriangle(double base, double leg) {
     return new Triangle(base, leg);
+  }
+
+  /**
+   * Method for creating triangles with aliases.
+   * @param sides sides
+   * @return triangle
+   */
+  public static Triangle createTriangleWithAliases(Map<String, Float> sides) {
+    if (sides.size() < 3) {
+      throw new IllegalArgumentException("For creating triangles is required 3 sides.");
+    }
+
+    Iterator<Map.Entry<String, Float>> sideEntries = sides.entrySet().iterator();
+
+    Map.Entry<String, Float> side1Entry = sideEntries.next();
+    Map.Entry<String, Float> side2Entry = sideEntries.next();
+    Map.Entry<String, Float> side3Entry = sideEntries.next();
+
+    Point p1 = new Point(Utils.getInitialCoordinateX(), Utils.getInitialCoordinateY(), side1Entry.getKey());
+    Point p2 = new Point(side1Entry.getValue(), Utils.getInitialCoordinateY(), side2Entry.getKey());
+    float height = (float)Math.sqrt(side2Entry.getValue() * side2Entry.getValue() - side1Entry.getValue() * side1Entry.getValue());
+    Point p3 = new Point(Utils.getInitialCoordinateX(), height, side3Entry.getKey());
+
+    return new Triangle(p1, p2, p3);
   }
 }
