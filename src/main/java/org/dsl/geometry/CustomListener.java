@@ -30,7 +30,7 @@ public class CustomListener extends GeometryBaseListener {
     float y = Float.parseFloat(ctx.NUM(1).getText());
     String id = ctx.ID().getText();
 
-    Point point = new Point(x, y, id);
+    Point point = FigureFactory.createPoint(x, y, id);
     figures.add(point);
 
     log.info("Добавлена точка: {} с идентификатором {}", point, id);
@@ -50,7 +50,7 @@ public class CustomListener extends GeometryBaseListener {
     Point endPoint = findPointById(endPointId);
 
     if (startPoint != null && endPoint != null) {
-      Line line = new Line(startPoint, endPoint);
+      Line line = FigureFactory.createLine(startPoint, endPoint);
       figures.add(line);
 
       log.info("Добавлена линия: " + line);
@@ -66,44 +66,59 @@ public class CustomListener extends GeometryBaseListener {
    */
   @Override
   public void enterTriangleDeclaration(GeometryParser.TriangleDeclarationContext ctx) {
+    Triangle triangle;
+
     if (ctx.point().size() == 3) {
-      handleTriangleDefinedByPoints(ctx);
+      Point p1 = findPointById(ctx.point(0).ID().getText());
+      Point p2 = findPointById(ctx.point(1).ID().getText());
+      Point p3 = findPointById(ctx.point(2).ID().getText());
+      if (p1 != null && p2 != null && p3 != null) {
+        triangle = FigureFactory.createTriangle(p1, p2, p3);
+      } else {
+        triangle = null;
+      }
     } else if (ctx.EQUILATERAL_TRIANGLE() != null) {
       double side = Double.parseDouble(ctx.NUM(0).getText());
-      Triangle triangle = FigureFactory.createEquilateralTriangle(side);
-      figures.add(triangle);
-      log.info("Добавлен равносторонний треугольник: {}", triangle);
+      triangle = FigureFactory.createEquilateralTriangle(side);
     } else if (ctx.ISOSCELES_TRIANGLE() != null) {
       double base = Double.parseDouble(ctx.NUM(0).getText());
       double leg = Double.parseDouble(ctx.NUM(1).getText());
-      Triangle triangle = FigureFactory.createIsoscelesTriangle(base, leg);
-      figures.add(triangle);
-      log.info("Добавлен равнобедренный треугольник: {}", triangle);
+      triangle = FigureFactory.createIsoscelesTriangle(base, leg);
     } else {
       double side1 = Double.parseDouble(ctx.NUM(0).getText());
       double side2 = Double.parseDouble(ctx.NUM(1).getText());
       double side3 = Double.parseDouble(ctx.NUM(2).getText());
-      Triangle triangle = new Triangle(side1, side2, side3);
-      if (triangle.isValidTriangle()) {
-        figures.add(triangle);
-        log.info("Добавлен треугольник с заданными сторонами: {}", triangle);
-      } else {
-        log.error("Невозможно создать треугольник с заданными сторонами.");
-      }
+      triangle = new Triangle(side1, side2, side3);
+    }
+
+    if (triangle != null) {
+      figures.add(triangle);
+      log.info("Добавлен треугольник");
+
+      ctx.triangleProperty()
+          .forEach(
+              property -> {
+                if (property.bisectorDeclaration() != null) {
+                  String vertexId = property.bisectorDeclaration().ID().getText();
+                  triangle.addBisectorFromVertex(vertexId);
+                  log.info("Добавлена биссектриса из вершины: " + vertexId);
+                }
+                if (property.angleDeclaration() != null) {
+                  String vertexId = property.angleDeclaration().ID().getText();
+                  double angle = Double.parseDouble(property.angleDeclaration().NUM().getText());
+                  triangle.setAngleAtVertex(vertexId, angle);
+                  log.info("Установлен угол " + angle + " для вершины: " + vertexId);
+                }
+              });
+    } else {
+      log.error("Не удалось создать треугольник");
     }
   }
 
-  private void handleTriangleDefinedByPoints(GeometryParser.TriangleDeclarationContext ctx) {
-    Point p1 = findPointById(ctx.point(0).ID().getText());
-    Point p2 = findPointById(ctx.point(1).ID().getText());
-    Point p3 = findPointById(ctx.point(2).ID().getText());
-    if (p1 != null && p2 != null && p3 != null) {
-      Triangle triangle = new Triangle(p1, p2, p3);
-      figures.add(triangle);
-      log.info("Добавлен треугольник через точки: {}", triangle);
-    } else {
-      log.error("Одна из точек для треугольника не найдена.");
-    }
+  @Override
+  public void enterCommentStatement(GeometryParser.CommentStatementContext ctx) {
+    String commentText = ctx.getText();
+    log.info("Найден комментарий: " + commentText);
   }
 
   /**

@@ -11,36 +11,6 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface GeometryVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link GeometryParser#functionCall}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFunctionCall(GeometryParser.FunctionCallContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link GeometryParser#areaFunction}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAreaFunction(GeometryParser.AreaFunctionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link GeometryParser#perimeterFunction}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPerimeterFunction(GeometryParser.PerimeterFunctionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link GeometryParser#lengthFunction}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLengthFunction(GeometryParser.LengthFunctionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link GeometryParser#figureID}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFigureID(GeometryParser.FigureIDContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link GeometryParser#program}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -52,6 +22,12 @@ public interface GeometryVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStatement(GeometryParser.StatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#commentStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCommentStatement(GeometryParser.CommentStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GeometryParser#figureDeclaration}.
 	 * @param ctx the parse tree
@@ -82,6 +58,30 @@ public interface GeometryVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTriangleDeclaration(GeometryParser.TriangleDeclarationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#aliasVertex}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAliasVertex(GeometryParser.AliasVertexContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#triangleProperty}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTriangleProperty(GeometryParser.TrianglePropertyContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#bisectorDeclaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBisectorDeclaration(GeometryParser.BisectorDeclarationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#angleDeclaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAngleDeclaration(GeometryParser.AngleDeclarationContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GeometryParser#squareDeclaration}.
 	 * @param ctx the parse tree
