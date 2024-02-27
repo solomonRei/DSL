@@ -1,17 +1,17 @@
-package org.dsl.geometry.processing.elements.impl;
+package org.dsl.geometry.processing.elements.properties.impl;
 
 import java.awt.Graphics2D;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.dsl.geometry.processing.elements.Drawable;
+import org.dsl.geometry.processing.elements.properties.Property;
+import org.dsl.geometry.processing.elements.shapes.impl.Point;
 
 /** Class for bisector. */
 @Getter
 @Setter
 @ToString
-public class Bisector implements Drawable {
+public class Bisector implements Property {
   private final Point startPoint;
   private final Point midPoint;
 

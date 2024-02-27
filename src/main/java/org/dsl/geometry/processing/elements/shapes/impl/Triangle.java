@@ -1,4 +1,4 @@
-package org.dsl.geometry.processing.elements.impl;
+package org.dsl.geometry.processing.elements.shapes.impl;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,14 +10,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.dsl.geometry.processing.elements.Drawable;
+import org.dsl.geometry.processing.elements.properties.impl.Bisector;
+import org.dsl.geometry.processing.elements.shapes.Shape;
+import org.dsl.geometry.processing.utils.Settings;
 import org.dsl.geometry.processing.utils.Utils;
 
 @Slf4j
 @Getter
 @Setter
 @ToString
-public class Triangle implements Drawable {
+public class Triangle implements Shape {
   private double side1;
   private double side2;
   private double side3;
@@ -31,10 +33,15 @@ public class Triangle implements Drawable {
     this.side1 = side1;
     this.side2 = side2;
     this.side3 = side3;
-    this.p1 = new Point(Utils.getInitialCoordinateX(), Utils.getInitialCoordinateY(), Utils.generateRandomId());
-    this.p2 = new Point((float) side1, Utils.getInitialCoordinateX(), Utils.generateRandomId());
+    this.p1 =
+        new Point(
+            Settings.INITIAL_COORDINATE_X, Settings.INITIAL_COORDINATE_Y, Utils.generateRandomId());
+    this.p2 = new Point((float) side1, Settings.INITIAL_COORDINATE_Y, Utils.generateRandomId());
     this.p3 =
-        new Point(Utils.getInitialCoordinateX(), (float) Math.sqrt(side2 * side2 - side1 * side1), Utils.generateRandomId());
+        new Point(
+            Settings.INITIAL_COORDINATE_X,
+            (float) Math.sqrt(side2 * side2 - side1 * side1),
+            Utils.generateRandomId());
     fillVerticesMap();
   }
 
@@ -50,8 +57,12 @@ public class Triangle implements Drawable {
 
   public Triangle(final double side, final boolean isEquilateral) {
     if (isEquilateral) {
-      this.p1 = new Point(Utils.getInitialCoordinateX(), Utils.getInitialCoordinateY(), Utils.generateRandomId());
-      this.p2 = new Point((float) side, Utils.getInitialCoordinateY(), Utils.generateRandomId());
+      this.p1 =
+          new Point(
+              Settings.INITIAL_COORDINATE_X,
+              Settings.INITIAL_COORDINATE_Y,
+              Utils.generateRandomId());
+      this.p2 = new Point((float) side, Settings.INITIAL_COORDINATE_Y, Utils.generateRandomId());
       this.p3 =
           new Point(
               (float) (side / 2), (float) (side * Math.sqrt(3) / 2), Utils.generateRandomId());
@@ -61,8 +72,10 @@ public class Triangle implements Drawable {
 
   public Triangle(final double base, final double leg) {
     double h = Math.sqrt(leg * leg - (base / 2) * (base / 2));
-    this.p1 = new Point(Utils.getInitialCoordinateX(), Utils.getInitialCoordinateY(), Utils.generateRandomId());
-    this.p2 = new Point((float) base, Utils.getInitialCoordinateY(), Utils.generateRandomId());
+    this.p1 =
+        new Point(
+            Settings.INITIAL_COORDINATE_X, Settings.INITIAL_COORDINATE_Y, Utils.generateRandomId());
+    this.p2 = new Point((float) base, Settings.INITIAL_COORDINATE_Y, Utils.generateRandomId());
     this.p3 = new Point((float) (base / 2), (float) h, Utils.generateRandomId());
     fillVerticesMap();
   }

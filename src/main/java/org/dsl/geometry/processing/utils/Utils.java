@@ -1,11 +1,13 @@
 package org.dsl.geometry.processing.utils;
 
+import java.util.List;
 import java.util.UUID;
-import org.dsl.geometry.processing.elements.impl.Point;
+import lombok.extern.slf4j.Slf4j;
+import org.dsl.geometry.processing.elements.Drawable;
+import org.dsl.geometry.processing.elements.shapes.impl.Point;
 
+@Slf4j
 public class Utils {
-  private static final int INITIAL_COORDINATE_X = 20;
-  private static final int INITIAL_COORDINATE_Y = 20;
 
   private Utils() {
     throw new IllegalStateException("Utility class");
@@ -32,20 +34,21 @@ public class Utils {
   }
 
   /**
-   * Get initial coordinate x.
+   * Method for finding point by id.
    *
-   * @return initial coordinate x
+   * @param id id
+   * @return point
    */
-  public static int getInitialCoordinateX() {
-    return INITIAL_COORDINATE_X;
-  }
-
-  /**
-   * Get initial coordinate y.
-   *
-   * @return initial coordinate y
-   */
-  public static int getInitialCoordinateY() {
-    return INITIAL_COORDINATE_Y;
+  public static Point findPointById(String id, List<Drawable> figures) {
+    for (Drawable figure : figures) {
+      if (figure instanceof Point) {
+        Point point = (Point) figure;
+        if (point.getId().equals(id)) {
+          return point;
+        }
+      }
+    }
+    log.error("Точка с идентификатором " + id + " не найдена.");
+    return null;
   }
 }

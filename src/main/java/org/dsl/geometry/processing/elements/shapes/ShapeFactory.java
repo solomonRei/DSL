@@ -1,17 +1,16 @@
-package org.dsl.geometry.processing;
-
-import org.dsl.geometry.processing.elements.impl.Line;
-import org.dsl.geometry.processing.elements.impl.Point;
-import org.dsl.geometry.processing.elements.impl.Triangle;
-import org.dsl.geometry.processing.utils.Utils;
+package org.dsl.geometry.processing.elements.shapes;
 
 import java.util.Iterator;
 import java.util.Map;
+import org.dsl.geometry.processing.elements.shapes.impl.Line;
+import org.dsl.geometry.processing.elements.shapes.impl.Point;
+import org.dsl.geometry.processing.elements.shapes.impl.Triangle;
+import org.dsl.geometry.processing.utils.Settings;
 
 /** Factory for creating figures. */
-public class FigureFactory {
+public class ShapeFactory {
 
-  private FigureFactory() {
+  private ShapeFactory() {
     throw new IllegalStateException("Utility class");
   }
 
@@ -99,10 +98,10 @@ public class FigureFactory {
     Map.Entry<String, Float> side2Entry = sideEntries.next();
     Map.Entry<String, Float> side3Entry = sideEntries.next();
 
-    Point p1 = new Point(Utils.getInitialCoordinateX(), Utils.getInitialCoordinateY(), side1Entry.getKey());
-    Point p2 = new Point(side1Entry.getValue(), Utils.getInitialCoordinateY(), side2Entry.getKey());
+    Point p1 = new Point(Settings.INITIAL_COORDINATE_X, Settings.INITIAL_COORDINATE_Y, side1Entry.getKey());
+    Point p2 = new Point(side1Entry.getValue(), Settings.INITIAL_COORDINATE_Y, side2Entry.getKey());
     float height = (float)Math.sqrt(side2Entry.getValue() * side2Entry.getValue() - side1Entry.getValue() * side1Entry.getValue());
-    Point p3 = new Point(Utils.getInitialCoordinateX(), height, side3Entry.getKey());
+    Point p3 = new Point(Settings.INITIAL_COORDINATE_X, height, side3Entry.getKey());
 
     return new Triangle(p1, p2, p3);
   }

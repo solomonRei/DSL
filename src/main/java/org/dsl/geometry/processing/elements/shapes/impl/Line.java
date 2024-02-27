@@ -1,10 +1,10 @@
-package org.dsl.geometry.processing.elements.impl;
+package org.dsl.geometry.processing.elements.shapes.impl;
 
-import org.dsl.geometry.processing.elements.Drawable;
+import org.dsl.geometry.processing.elements.shapes.Shape;
 
 import java.awt.*;
 
-public class Line implements Drawable {
+public class Line implements Shape {
   private final Point start;
   private final Point end;
 
@@ -16,11 +16,7 @@ public class Line implements Drawable {
   @Override
   public void draw(Graphics2D g) {
     g.setColor(Color.BLACK);
-    g.drawLine(
-        (int) start.getX(),
-        (int) start.getY(),
-        (int) end.getX(),
-        (int) end.getY());
+    g.drawLine((int) start.getX(), (int) start.getY(), (int) end.getX(), (int) end.getY());
 
     start.draw(g);
     end.draw(g);

@@ -34,15 +34,14 @@ public class CompilerService {
 
     log.info("Creating sketch");
 
-    GeometrySketchHeadless sketch = new GeometrySketchHeadless();
-    sketch.setFigures(listener.getFigures());
+    GeometrySketchHeadless sketch = new GeometrySketchHeadless(listener.getFigures());
 
     log.info("Creating image");
 
-    sketch.createImage();
+    sketch.outputFigures();
 
     try {
-      String imagePath = imageService.saveImage(sketch.createImage(), "output.png");
+      String imagePath = imageService.saveImage(sketch.outputFigures(), "output.png");
       log.info("Image saved at {}", imagePath);
       return "output.png";
     } catch (IOException e) {

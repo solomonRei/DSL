@@ -74,8 +74,8 @@ aliasVertex
  triangleProperty: bisectorDeclaration
                   | angleDeclaration;
 
- bisectorDeclaration: BISECTOR LPAREN ID RPAREN;
- angleDeclaration: ANGLE LPAREN ID COMMA NUM RPAREN;
+bisectorDeclaration: BISECTOR LPAREN ID RPAREN;
+angleDeclaration: ANGLE LPAREN ID COMMA NUM RPAREN;
 
 squareDeclaration: SQUARE ID LPAREN NUM RPAREN
                   | SQUARE ID 'side' EQUAL NUM SEMICOLON;
