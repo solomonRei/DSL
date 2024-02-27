@@ -1,16 +1,229 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>DSL Компилятор</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/theme/darcula.min.css">
+    <style>
+
+        body {
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark-mode {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+
+        .light-mode {
+            background-color: #ffffff;
+            color: #343a40;
+        }
+
+        #editor, #result {
+            height: 90vh;
+        }
+
+        #editor {
+            margin-right: 10px;
+        }
+
+        .editor-area {
+            height: 80%;
+            background-color: #f8f9fa;
+            color: #495057;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            line-height: 1.5;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark-mode .editor-area {
+            background-color: #495057;
+            color: #f8f9fa;
+        }
+
+        .btn-compile {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .container-fluid {
+            display: flex;
+            flex-wrap: nowrap;
+            padding: 0;
+        }
+
+        .flex-item {
+            flex: 1;
+        }
+
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .theme-switch {
+            display: inline-block;
+            height: 34px;
+            position: relative;
+            width: 60px;
+        }
+
+        .theme-switch input {
+            display: none;
+        }
+
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+        }
+
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 26px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 26px;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .cm-error {
+            color: red;
+            text-decoration: underline;
+        }
+    </style>
 </head>
-<body>
-<h1>Введите ваш DSL код</h1>
-<form action="/compile" method="post">
-    <label>
-        <textarea name="dslCode" rows="10" cols="50" placeholder="Введите код здесь..."></textarea>
-    </label><br>
-    <input type="submit" value="Компилировать">
-</form>
+<body class="light-mode">
+
+<div class="theme-switch-wrapper">
+    <span id="toggle-icon" class="mr-2">☀️</span>
+    <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox"/>
+        <div class="slider round"></div>
+    </label>
+    <span id="toggle-icon-dark" class="ml-2">🌙</span>
+</div>
+
+<div class="container-fluid">
+    <div class="flex-item" id="editor">
+        <h1>Введите ваш DSL код</h1>
+        <textarea id="dslCode" class="form-control editor-area" rows="10" placeholder="Введите код здесь..."></textarea><br>
+        <button id="compileBtn" class="btn btn-primary btn-compile">Компилировать</button>
+    </div>
+    <div class="flex-item" id="result">
+        <h1>Результат</h1>
+        <iframe id="resultFrame" class="result-frame form-control" src="about:blank"></iframe>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/mode/clike/clike.min.js"></script>
+<script>
+
+    CodeMirror.defineMode("mydsl", function () {
+        return {
+            startState: function () {
+                return {ctx: "base"};
+            },
+            token: function (stream, state) {
+                if (stream.match(/(Point|Line|Segment|Triangle|Square|Rectangle|Circle|Ellipse|EquilateralTriangle|IsoscelesTriangle)/)) {
+                    return "keyword";
+                } else if (stream.match(/[a-zA-Z][a-zA-Z0-9]*/)) {
+                    return "variable";
+                } else if (stream.match(/[-+*\/=]/)) {
+                    return "operator";
+                } else if (stream.match(/[0-9]+(\.[0-9]+)?/)) {
+                    return "number";
+                } else if (stream.match(/;.*/)) {
+                    return "comment";
+                }
+                stream.next();
+                return null;
+            }
+        };
+    });
+    CodeMirror.defineMIME("text/x-mydsl", "mydsl");
+
+    $(document).ready(function () {
+        var editor = CodeMirror.fromTextArea(document.getElementById("dslCode"), {
+            lineNumbers: true,
+            mode: "text/x-mydsl",
+            theme: "default"
+        });
+
+        $('#compileBtn').on('click', function () {
+            var code = editor.getValue();
+
+            $.ajax({
+                url: '/compile',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({dslCode: code}),
+                success: function (data) {
+                    var resultFrame = $('#resultFrame');
+                    resultFrame.attr('src', data.imagePath);
+
+                    resultFrame.on('load', function () {
+                        try {
+                            var body = resultFrame.contents().find('body');
+                            var image = body.find('img');
+                            console.log("image: ", image);
+                            var newHeight = image.height();
+                            console.log("newHeight: ", newHeight);
+                            resultFrame.height(newHeight + 'px');
+                        } catch (e) {
+                            console.error("Ошибка при изменении размера iframe: ", e);
+                        }
+                    });
+                },
+                error: function (error) {
+                    console.error("Ошибка компиляции: ", error);
+                }
+            });
+        });
+
+        $('#checkbox').change(function () {
+            if (this.checked) {
+                $('body').addClass('dark-mode').removeClass('light-mode');
+                editor.setOption("theme", "darcula");
+            } else {
+                $('body').addClass('light-mode').removeClass('dark-mode');
+                editor.setOption("theme", "default");
+            }
+        });
+
+    });
+</script>
 </body>
 </html>
