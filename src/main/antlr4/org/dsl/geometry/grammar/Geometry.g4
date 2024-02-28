@@ -13,6 +13,7 @@ POINT: 'Point';
 LINE: 'Line';
 SEGMENT: 'Segment';
 TRIANGLE: 'Triangle';
+HEIGHT: 'Height';
 EQUILATERAL_TRIANGLE: 'EquilateralTriangle';
 ISOSCELES_TRIANGLE: 'IsoscelesTriangle';
 SQUARE: 'Square';
@@ -39,13 +40,20 @@ COMMENT: '//' ~[\r\n]*;
 ML_COMMENT: '/*' .*? '*/' -> skip;
 
 // Правила
-program: (statement | commentStatement)+;
+program: (statement | commentStatement | functionCallStatement)+;
 
 statement: figureDeclaration SEMICOLON
          | variableDeclaration SEMICOLON
          | comment;
 
+functionCallStatement: functionCall SEMICOLON;
 commentStatement: COMMENT;
+
+functionCall: ID ARROW functionDeclaration;
+
+functionDeclaration: areaCall
+                    | perimeterCall
+                    | diagonalCall;
 
 figureDeclaration: pointDeclaration
                  | lineDeclaration
@@ -57,6 +65,9 @@ figureDeclaration: pointDeclaration
                  | circleDeclaration
                  | ellipseDeclaration;
 
+areaCall: 'area' LPAREN RPAREN;
+perimeterCall: 'perimeter' LPAREN RPAREN;
+diagonalCall: 'diagonal' LPAREN RPAREN;
 pointDeclaration: POINT ID LPAREN NUM COMMA NUM RPAREN;
 lineDeclaration: LINE ID LPAREN point COMMA point RPAREN;
 segmentDeclaration: SEGMENT ID LPAREN point COMMA point RPAREN;
@@ -72,10 +83,12 @@ aliasVertex
     : ID':'NUM;
 
  triangleProperty: bisectorDeclaration
-                  | angleDeclaration;
+                  | angleDeclaration
+                  | heightDeclaration;
 
 bisectorDeclaration: BISECTOR LPAREN ID RPAREN;
 angleDeclaration: ANGLE LPAREN ID COMMA NUM RPAREN;
+heightDeclaration: HEIGHT LPAREN ID RPAREN | HEIGHT LPAREN ID COMMA NUM RPAREN;
 
 squareDeclaration: SQUARE ID LPAREN NUM RPAREN
                   | SQUARE ID 'side' EQUAL NUM SEMICOLON;
@@ -85,6 +98,7 @@ parallelogramDeclaration: PARALLELOGRAM ID LPAREN NUM COMMA NUM COMMA NUM RPAREN
 circleDeclaration: CIRCLE ID LPAREN NUM RPAREN;
 ellipseDeclaration: ELLIPSE ID LPAREN NUM COMMA NUM RPAREN;
 rhombusDeclaration: 'Rhombus' ID LPAREN NUM RPAREN;
+
 
 variableDeclaration: type ID (EQUAL expression)?;
 
