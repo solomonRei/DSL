@@ -40,6 +40,18 @@ public class GeometryBaseListener implements GeometryListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFunctionCallStatement(GeometryParser.FunctionCallStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionCallStatement(GeometryParser.FunctionCallStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCommentStatement(GeometryParser.CommentStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -52,6 +64,30 @@ public class GeometryBaseListener implements GeometryListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFunctionCall(GeometryParser.FunctionCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionCall(GeometryParser.FunctionCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunctionDeclaration(GeometryParser.FunctionDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionDeclaration(GeometryParser.FunctionDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterFigureDeclaration(GeometryParser.FigureDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -59,6 +95,42 @@ public class GeometryBaseListener implements GeometryListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFigureDeclaration(GeometryParser.FigureDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAreaCall(GeometryParser.AreaCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAreaCall(GeometryParser.AreaCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPerimeterCall(GeometryParser.PerimeterCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPerimeterCall(GeometryParser.PerimeterCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDiagonalCall(GeometryParser.DiagonalCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDiagonalCall(GeometryParser.DiagonalCallContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -155,6 +227,18 @@ public class GeometryBaseListener implements GeometryListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAngleDeclaration(GeometryParser.AngleDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterHeightDeclaration(GeometryParser.HeightDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitHeightDeclaration(GeometryParser.HeightDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

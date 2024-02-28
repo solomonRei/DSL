@@ -23,17 +23,53 @@ public interface GeometryVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(GeometryParser.StatementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link GeometryParser#functionCallStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionCallStatement(GeometryParser.FunctionCallStatementContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link GeometryParser#commentStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitCommentStatement(GeometryParser.CommentStatementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link GeometryParser#functionCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionCall(GeometryParser.FunctionCallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#functionDeclaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionDeclaration(GeometryParser.FunctionDeclarationContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link GeometryParser#figureDeclaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitFigureDeclaration(GeometryParser.FigureDeclarationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#areaCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAreaCall(GeometryParser.AreaCallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#perimeterCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPerimeterCall(GeometryParser.PerimeterCallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#diagonalCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDiagonalCall(GeometryParser.DiagonalCallContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GeometryParser#pointDeclaration}.
 	 * @param ctx the parse tree
@@ -82,6 +118,12 @@ public interface GeometryVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAngleDeclaration(GeometryParser.AngleDeclarationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#heightDeclaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitHeightDeclaration(GeometryParser.HeightDeclarationContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GeometryParser#squareDeclaration}.
 	 * @param ctx the parse tree

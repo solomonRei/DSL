@@ -28,6 +28,16 @@ public interface GeometryListener extends ParseTreeListener {
 	 */
 	void exitStatement(GeometryParser.StatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GeometryParser#functionCallStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionCallStatement(GeometryParser.FunctionCallStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#functionCallStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionCallStatement(GeometryParser.FunctionCallStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GeometryParser#commentStatement}.
 	 * @param ctx the parse tree
 	 */
@@ -38,6 +48,26 @@ public interface GeometryListener extends ParseTreeListener {
 	 */
 	void exitCommentStatement(GeometryParser.CommentStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GeometryParser#functionCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionCall(GeometryParser.FunctionCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#functionCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionCall(GeometryParser.FunctionCallContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#functionDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionDeclaration(GeometryParser.FunctionDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#functionDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionDeclaration(GeometryParser.FunctionDeclarationContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GeometryParser#figureDeclaration}.
 	 * @param ctx the parse tree
 	 */
@@ -47,6 +77,36 @@ public interface GeometryListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFigureDeclaration(GeometryParser.FigureDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#areaCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterAreaCall(GeometryParser.AreaCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#areaCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitAreaCall(GeometryParser.AreaCallContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#perimeterCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterPerimeterCall(GeometryParser.PerimeterCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#perimeterCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitPerimeterCall(GeometryParser.PerimeterCallContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#diagonalCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterDiagonalCall(GeometryParser.DiagonalCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#diagonalCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitDiagonalCall(GeometryParser.DiagonalCallContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GeometryParser#pointDeclaration}.
 	 * @param ctx the parse tree
@@ -127,6 +187,16 @@ public interface GeometryListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAngleDeclaration(GeometryParser.AngleDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#heightDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterHeightDeclaration(GeometryParser.HeightDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#heightDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitHeightDeclaration(GeometryParser.HeightDeclarationContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GeometryParser#squareDeclaration}.
 	 * @param ctx the parse tree
