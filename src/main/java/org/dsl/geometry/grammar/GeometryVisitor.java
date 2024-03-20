@@ -47,6 +47,48 @@ public interface GeometryVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFunctionDeclaration(GeometryParser.FunctionDeclarationContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link GeometryParser#loopStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLoopStatement(GeometryParser.LoopStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#forLoop}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForLoop(GeometryParser.ForLoopContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#whileLoop}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhileLoop(GeometryParser.WhileLoopContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#forInit}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForInit(GeometryParser.ForInitContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#forCondition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForCondition(GeometryParser.ForConditionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#forUpdate}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForUpdate(GeometryParser.ForUpdateContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#ifElseStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfElseStatement(GeometryParser.IfElseStatementContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link GeometryParser#figureDeclaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

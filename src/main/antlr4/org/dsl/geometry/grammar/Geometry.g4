@@ -38,9 +38,17 @@ FALSE: 'false';
 STRING: '"' ('\\' . | ~('\\' | '"'))* '"';
 COMMENT: '//' ~[\r\n]*;
 ML_COMMENT: '/*' .*? '*/' -> skip;
+FOR: 'for';
+WHILE: 'while';
+IF: 'if';
+ELSE: 'else';
+LBRACE: '{';
+RBRACE: '}';
+
+
 
 // Правила
-program: (statement | commentStatement | functionCallStatement)+;
+program: (statement | commentStatement | functionCallStatement | loopStatement | ifElseStatement)+;
 
 statement: figureDeclaration SEMICOLON
          | variableDeclaration SEMICOLON
@@ -54,6 +62,17 @@ functionCall: ID ARROW functionDeclaration;
 functionDeclaration: areaCall
                     | perimeterCall
                     | diagonalCall;
+
+loopStatement: forLoop | whileLoop;
+
+forLoop: FOR LPAREN forInit SEMICOLON forCondition SEMICOLON forUpdate RPAREN LBRACE program RBRACE;
+whileLoop: WHILE LPAREN expression RPAREN LBRACE program RBRACE;
+
+forInit: variableDeclaration | expression;
+forCondition: expression;
+forUpdate: expression;
+
+ifElseStatement: IF LPAREN expression RPAREN LBRACE program RBRACE (ELSE LBRACE program RBRACE)?;
 
 figureDeclaration: pointDeclaration
                  | lineDeclaration

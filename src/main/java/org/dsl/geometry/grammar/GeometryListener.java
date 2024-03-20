@@ -68,6 +68,76 @@ public interface GeometryListener extends ParseTreeListener {
 	 */
 	void exitFunctionDeclaration(GeometryParser.FunctionDeclarationContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GeometryParser#loopStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterLoopStatement(GeometryParser.LoopStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#loopStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitLoopStatement(GeometryParser.LoopStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#forLoop}.
+	 * @param ctx the parse tree
+	 */
+	void enterForLoop(GeometryParser.ForLoopContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#forLoop}.
+	 * @param ctx the parse tree
+	 */
+	void exitForLoop(GeometryParser.ForLoopContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#whileLoop}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhileLoop(GeometryParser.WhileLoopContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#whileLoop}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhileLoop(GeometryParser.WhileLoopContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#forInit}.
+	 * @param ctx the parse tree
+	 */
+	void enterForInit(GeometryParser.ForInitContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#forInit}.
+	 * @param ctx the parse tree
+	 */
+	void exitForInit(GeometryParser.ForInitContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#forCondition}.
+	 * @param ctx the parse tree
+	 */
+	void enterForCondition(GeometryParser.ForConditionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#forCondition}.
+	 * @param ctx the parse tree
+	 */
+	void exitForCondition(GeometryParser.ForConditionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#forUpdate}.
+	 * @param ctx the parse tree
+	 */
+	void enterForUpdate(GeometryParser.ForUpdateContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#forUpdate}.
+	 * @param ctx the parse tree
+	 */
+	void exitForUpdate(GeometryParser.ForUpdateContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#ifElseStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfElseStatement(GeometryParser.IfElseStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#ifElseStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfElseStatement(GeometryParser.IfElseStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GeometryParser#figureDeclaration}.
 	 * @param ctx the parse tree
 	 */

@@ -23,27 +23,31 @@ public class GeometryParser extends Parser {
 		ISOSCELES_TRIANGLE=23, SQUARE=24, RECTANGLE=25, PARALLELOGRAM=26, CIRCLE=27, 
 		ELLIPSE=28, RHOMBUS=29, BISECTOR=30, ANGLE=31, VERTEX=32, NUM=33, ID=34, 
 		ALIAS=35, WS=36, SEMICOLON=37, COMMA=38, LPAREN=39, RPAREN=40, TRUE=41, 
-		FALSE=42, STRING=43, COMMENT=44, ML_COMMENT=45;
+		FALSE=42, STRING=43, COMMENT=44, ML_COMMENT=45, FOR=46, WHILE=47, IF=48, 
+		ELSE=49, LBRACE=50, RBRACE=51;
 	public static final int
 		RULE_program = 0, RULE_statement = 1, RULE_functionCallStatement = 2, 
 		RULE_commentStatement = 3, RULE_functionCall = 4, RULE_functionDeclaration = 5, 
-		RULE_figureDeclaration = 6, RULE_areaCall = 7, RULE_perimeterCall = 8, 
-		RULE_diagonalCall = 9, RULE_pointDeclaration = 10, RULE_lineDeclaration = 11, 
-		RULE_segmentDeclaration = 12, RULE_triangleDeclaration = 13, RULE_aliasVertex = 14, 
-		RULE_triangleProperty = 15, RULE_bisectorDeclaration = 16, RULE_angleDeclaration = 17, 
-		RULE_heightDeclaration = 18, RULE_squareDeclaration = 19, RULE_rectangleDeclaration = 20, 
-		RULE_parallelogramDeclaration = 21, RULE_circleDeclaration = 22, RULE_ellipseDeclaration = 23, 
-		RULE_rhombusDeclaration = 24, RULE_variableDeclaration = 25, RULE_type = 26, 
-		RULE_expression = 27, RULE_point = 28, RULE_comment = 29;
+		RULE_loopStatement = 6, RULE_forLoop = 7, RULE_whileLoop = 8, RULE_forInit = 9, 
+		RULE_forCondition = 10, RULE_forUpdate = 11, RULE_ifElseStatement = 12, 
+		RULE_figureDeclaration = 13, RULE_areaCall = 14, RULE_perimeterCall = 15, 
+		RULE_diagonalCall = 16, RULE_pointDeclaration = 17, RULE_lineDeclaration = 18, 
+		RULE_segmentDeclaration = 19, RULE_triangleDeclaration = 20, RULE_aliasVertex = 21, 
+		RULE_triangleProperty = 22, RULE_bisectorDeclaration = 23, RULE_angleDeclaration = 24, 
+		RULE_heightDeclaration = 25, RULE_squareDeclaration = 26, RULE_rectangleDeclaration = 27, 
+		RULE_parallelogramDeclaration = 28, RULE_circleDeclaration = 29, RULE_ellipseDeclaration = 30, 
+		RULE_rhombusDeclaration = 31, RULE_variableDeclaration = 32, RULE_type = 33, 
+		RULE_expression = 34, RULE_point = 35, RULE_comment = 36;
 	public static final String[] ruleNames = {
 		"program", "statement", "functionCallStatement", "commentStatement", "functionCall", 
-		"functionDeclaration", "figureDeclaration", "areaCall", "perimeterCall", 
-		"diagonalCall", "pointDeclaration", "lineDeclaration", "segmentDeclaration", 
-		"triangleDeclaration", "aliasVertex", "triangleProperty", "bisectorDeclaration", 
-		"angleDeclaration", "heightDeclaration", "squareDeclaration", "rectangleDeclaration", 
-		"parallelogramDeclaration", "circleDeclaration", "ellipseDeclaration", 
-		"rhombusDeclaration", "variableDeclaration", "type", "expression", "point", 
-		"comment"
+		"functionDeclaration", "loopStatement", "forLoop", "whileLoop", "forInit", 
+		"forCondition", "forUpdate", "ifElseStatement", "figureDeclaration", "areaCall", 
+		"perimeterCall", "diagonalCall", "pointDeclaration", "lineDeclaration", 
+		"segmentDeclaration", "triangleDeclaration", "aliasVertex", "triangleProperty", 
+		"bisectorDeclaration", "angleDeclaration", "heightDeclaration", "squareDeclaration", 
+		"rectangleDeclaration", "parallelogramDeclaration", "circleDeclaration", 
+		"ellipseDeclaration", "rhombusDeclaration", "variableDeclaration", "type", 
+		"expression", "point", "comment"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -53,7 +57,8 @@ public class GeometryParser extends Parser {
 		"'EquilateralTriangle'", "'IsoscelesTriangle'", "'Square'", "'Rectangle'", 
 		"'Parallelogram'", "'Circle'", "'Ellipse'", "'Rhombus'", "'bisector'", 
 		"'Angle'", "'Vertex'", null, null, null, null, "';'", "','", "'('", "')'", 
-		"'true'", "'false'"
+		"'true'", "'false'", null, null, null, "'for'", "'while'", "'if'", "'else'", 
+		"'{'", "'}'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, "EQUAL", 
@@ -61,7 +66,8 @@ public class GeometryParser extends Parser {
 		"HEIGHT", "EQUILATERAL_TRIANGLE", "ISOSCELES_TRIANGLE", "SQUARE", "RECTANGLE", 
 		"PARALLELOGRAM", "CIRCLE", "ELLIPSE", "RHOMBUS", "BISECTOR", "ANGLE", 
 		"VERTEX", "NUM", "ID", "ALIAS", "WS", "SEMICOLON", "COMMA", "LPAREN", 
-		"RPAREN", "TRUE", "FALSE", "STRING", "COMMENT", "ML_COMMENT"
+		"RPAREN", "TRUE", "FALSE", "STRING", "COMMENT", "ML_COMMENT", "FOR", "WHILE", 
+		"IF", "ELSE", "LBRACE", "RBRACE"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -131,6 +137,18 @@ public class GeometryParser extends Parser {
 		public FunctionCallStatementContext functionCallStatement(int i) {
 			return getRuleContext(FunctionCallStatementContext.class,i);
 		}
+		public List<LoopStatementContext> loopStatement() {
+			return getRuleContexts(LoopStatementContext.class);
+		}
+		public LoopStatementContext loopStatement(int i) {
+			return getRuleContext(LoopStatementContext.class,i);
+		}
+		public List<IfElseStatementContext> ifElseStatement() {
+			return getRuleContexts(IfElseStatementContext.class);
+		}
+		public IfElseStatementContext ifElseStatement(int i) {
+			return getRuleContext(IfElseStatementContext.class,i);
+		}
 		public ProgramContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -157,38 +175,50 @@ public class GeometryParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(63); 
+			setState(79); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
-				setState(63);
+				setState(79);
 				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
 				case 1:
 					{
-					setState(60);
+					setState(74);
 					statement();
 					}
 					break;
 				case 2:
 					{
-					setState(61);
+					setState(75);
 					commentStatement();
 					}
 					break;
 				case 3:
 					{
-					setState(62);
+					setState(76);
 					functionCallStatement();
+					}
+					break;
+				case 4:
+					{
+					setState(77);
+					loopStatement();
+					}
+					break;
+				case 5:
+					{
+					setState(78);
+					ifElseStatement();
 					}
 					break;
 				}
 				}
-				setState(65); 
+				setState(81); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << POINT) | (1L << LINE) | (1L << SEGMENT) | (1L << TRIANGLE) | (1L << EQUILATERAL_TRIANGLE) | (1L << ISOSCELES_TRIANGLE) | (1L << SQUARE) | (1L << RECTANGLE) | (1L << PARALLELOGRAM) | (1L << CIRCLE) | (1L << ELLIPSE) | (1L << ID) | (1L << COMMENT) | (1L << ML_COMMENT))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << POINT) | (1L << LINE) | (1L << SEGMENT) | (1L << TRIANGLE) | (1L << EQUILATERAL_TRIANGLE) | (1L << ISOSCELES_TRIANGLE) | (1L << SQUARE) | (1L << RECTANGLE) | (1L << PARALLELOGRAM) | (1L << CIRCLE) | (1L << ELLIPSE) | (1L << ID) | (1L << COMMENT) | (1L << ML_COMMENT) | (1L << FOR) | (1L << WHILE) | (1L << IF))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -236,7 +266,7 @@ public class GeometryParser extends Parser {
 		StatementContext _localctx = new StatementContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_statement);
 		try {
-			setState(74);
+			setState(90);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case POINT:
@@ -252,9 +282,9 @@ public class GeometryParser extends Parser {
 			case ELLIPSE:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(67);
+				setState(83);
 				figureDeclaration();
-				setState(68);
+				setState(84);
 				match(SEMICOLON);
 				}
 				break;
@@ -263,9 +293,9 @@ public class GeometryParser extends Parser {
 			case T__9:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(70);
+				setState(86);
 				variableDeclaration();
-				setState(71);
+				setState(87);
 				match(SEMICOLON);
 				}
 				break;
@@ -273,7 +303,7 @@ public class GeometryParser extends Parser {
 			case ML_COMMENT:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(73);
+				setState(89);
 				comment();
 				}
 				break;
@@ -322,9 +352,9 @@ public class GeometryParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(76);
+			setState(92);
 			functionCall();
-			setState(77);
+			setState(93);
 			match(SEMICOLON);
 			}
 		}
@@ -366,7 +396,7 @@ public class GeometryParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(79);
+			setState(95);
 			match(COMMENT);
 			}
 		}
@@ -412,11 +442,11 @@ public class GeometryParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(81);
+			setState(97);
 			match(ID);
-			setState(82);
+			setState(98);
 			match(ARROW);
-			setState(83);
+			setState(99);
 			functionDeclaration();
 			}
 		}
@@ -464,32 +494,488 @@ public class GeometryParser extends Parser {
 		FunctionDeclarationContext _localctx = new FunctionDeclarationContext(_ctx, getState());
 		enterRule(_localctx, 10, RULE_functionDeclaration);
 		try {
-			setState(88);
+			setState(104);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__0:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(85);
+				setState(101);
 				areaCall();
 				}
 				break;
 			case T__1:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(86);
+				setState(102);
 				perimeterCall();
 				}
 				break;
 			case T__2:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(87);
+				setState(103);
 				diagonalCall();
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class LoopStatementContext extends ParserRuleContext {
+		public ForLoopContext forLoop() {
+			return getRuleContext(ForLoopContext.class,0);
+		}
+		public WhileLoopContext whileLoop() {
+			return getRuleContext(WhileLoopContext.class,0);
+		}
+		public LoopStatementContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_loopStatement; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GeometryListener ) ((GeometryListener)listener).enterLoopStatement(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GeometryListener ) ((GeometryListener)listener).exitLoopStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GeometryVisitor ) return ((GeometryVisitor<? extends T>)visitor).visitLoopStatement(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final LoopStatementContext loopStatement() throws RecognitionException {
+		LoopStatementContext _localctx = new LoopStatementContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_loopStatement);
+		try {
+			setState(108);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case FOR:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(106);
+				forLoop();
+				}
+				break;
+			case WHILE:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(107);
+				whileLoop();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ForLoopContext extends ParserRuleContext {
+		public TerminalNode FOR() { return getToken(GeometryParser.FOR, 0); }
+		public TerminalNode LPAREN() { return getToken(GeometryParser.LPAREN, 0); }
+		public ForInitContext forInit() {
+			return getRuleContext(ForInitContext.class,0);
+		}
+		public List<TerminalNode> SEMICOLON() { return getTokens(GeometryParser.SEMICOLON); }
+		public TerminalNode SEMICOLON(int i) {
+			return getToken(GeometryParser.SEMICOLON, i);
+		}
+		public ForConditionContext forCondition() {
+			return getRuleContext(ForConditionContext.class,0);
+		}
+		public ForUpdateContext forUpdate() {
+			return getRuleContext(ForUpdateContext.class,0);
+		}
+		public TerminalNode RPAREN() { return getToken(GeometryParser.RPAREN, 0); }
+		public TerminalNode LBRACE() { return getToken(GeometryParser.LBRACE, 0); }
+		public ProgramContext program() {
+			return getRuleContext(ProgramContext.class,0);
+		}
+		public TerminalNode RBRACE() { return getToken(GeometryParser.RBRACE, 0); }
+		public ForLoopContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_forLoop; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GeometryListener ) ((GeometryListener)listener).enterForLoop(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GeometryListener ) ((GeometryListener)listener).exitForLoop(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GeometryVisitor ) return ((GeometryVisitor<? extends T>)visitor).visitForLoop(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ForLoopContext forLoop() throws RecognitionException {
+		ForLoopContext _localctx = new ForLoopContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_forLoop);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(110);
+			match(FOR);
+			setState(111);
+			match(LPAREN);
+			setState(112);
+			forInit();
+			setState(113);
+			match(SEMICOLON);
+			setState(114);
+			forCondition();
+			setState(115);
+			match(SEMICOLON);
+			setState(116);
+			forUpdate();
+			setState(117);
+			match(RPAREN);
+			setState(118);
+			match(LBRACE);
+			setState(119);
+			program();
+			setState(120);
+			match(RBRACE);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class WhileLoopContext extends ParserRuleContext {
+		public TerminalNode WHILE() { return getToken(GeometryParser.WHILE, 0); }
+		public TerminalNode LPAREN() { return getToken(GeometryParser.LPAREN, 0); }
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public TerminalNode RPAREN() { return getToken(GeometryParser.RPAREN, 0); }
+		public TerminalNode LBRACE() { return getToken(GeometryParser.LBRACE, 0); }
+		public ProgramContext program() {
+			return getRuleContext(ProgramContext.class,0);
+		}
+		public TerminalNode RBRACE() { return getToken(GeometryParser.RBRACE, 0); }
+		public WhileLoopContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_whileLoop; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GeometryListener ) ((GeometryListener)listener).enterWhileLoop(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GeometryListener ) ((GeometryListener)listener).exitWhileLoop(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GeometryVisitor ) return ((GeometryVisitor<? extends T>)visitor).visitWhileLoop(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final WhileLoopContext whileLoop() throws RecognitionException {
+		WhileLoopContext _localctx = new WhileLoopContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_whileLoop);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(122);
+			match(WHILE);
+			setState(123);
+			match(LPAREN);
+			setState(124);
+			expression(0);
+			setState(125);
+			match(RPAREN);
+			setState(126);
+			match(LBRACE);
+			setState(127);
+			program();
+			setState(128);
+			match(RBRACE);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ForInitContext extends ParserRuleContext {
+		public VariableDeclarationContext variableDeclaration() {
+			return getRuleContext(VariableDeclarationContext.class,0);
+		}
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public ForInitContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_forInit; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GeometryListener ) ((GeometryListener)listener).enterForInit(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GeometryListener ) ((GeometryListener)listener).exitForInit(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GeometryVisitor ) return ((GeometryVisitor<? extends T>)visitor).visitForInit(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ForInitContext forInit() throws RecognitionException {
+		ForInitContext _localctx = new ForInitContext(_ctx, getState());
+		enterRule(_localctx, 18, RULE_forInit);
+		try {
+			setState(132);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case T__7:
+			case T__8:
+			case T__9:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(130);
+				variableDeclaration();
+				}
+				break;
+			case NUM:
+			case ID:
+			case LPAREN:
+			case TRUE:
+			case FALSE:
+			case STRING:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(131);
+				expression(0);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ForConditionContext extends ParserRuleContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public ForConditionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_forCondition; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GeometryListener ) ((GeometryListener)listener).enterForCondition(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GeometryListener ) ((GeometryListener)listener).exitForCondition(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GeometryVisitor ) return ((GeometryVisitor<? extends T>)visitor).visitForCondition(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ForConditionContext forCondition() throws RecognitionException {
+		ForConditionContext _localctx = new ForConditionContext(_ctx, getState());
+		enterRule(_localctx, 20, RULE_forCondition);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(134);
+			expression(0);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ForUpdateContext extends ParserRuleContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public ForUpdateContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_forUpdate; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GeometryListener ) ((GeometryListener)listener).enterForUpdate(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GeometryListener ) ((GeometryListener)listener).exitForUpdate(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GeometryVisitor ) return ((GeometryVisitor<? extends T>)visitor).visitForUpdate(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ForUpdateContext forUpdate() throws RecognitionException {
+		ForUpdateContext _localctx = new ForUpdateContext(_ctx, getState());
+		enterRule(_localctx, 22, RULE_forUpdate);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(136);
+			expression(0);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class IfElseStatementContext extends ParserRuleContext {
+		public TerminalNode IF() { return getToken(GeometryParser.IF, 0); }
+		public TerminalNode LPAREN() { return getToken(GeometryParser.LPAREN, 0); }
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public TerminalNode RPAREN() { return getToken(GeometryParser.RPAREN, 0); }
+		public List<TerminalNode> LBRACE() { return getTokens(GeometryParser.LBRACE); }
+		public TerminalNode LBRACE(int i) {
+			return getToken(GeometryParser.LBRACE, i);
+		}
+		public List<ProgramContext> program() {
+			return getRuleContexts(ProgramContext.class);
+		}
+		public ProgramContext program(int i) {
+			return getRuleContext(ProgramContext.class,i);
+		}
+		public List<TerminalNode> RBRACE() { return getTokens(GeometryParser.RBRACE); }
+		public TerminalNode RBRACE(int i) {
+			return getToken(GeometryParser.RBRACE, i);
+		}
+		public TerminalNode ELSE() { return getToken(GeometryParser.ELSE, 0); }
+		public IfElseStatementContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_ifElseStatement; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GeometryListener ) ((GeometryListener)listener).enterIfElseStatement(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GeometryListener ) ((GeometryListener)listener).exitIfElseStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GeometryVisitor ) return ((GeometryVisitor<? extends T>)visitor).visitIfElseStatement(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final IfElseStatementContext ifElseStatement() throws RecognitionException {
+		IfElseStatementContext _localctx = new IfElseStatementContext(_ctx, getState());
+		enterRule(_localctx, 24, RULE_ifElseStatement);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(138);
+			match(IF);
+			setState(139);
+			match(LPAREN);
+			setState(140);
+			expression(0);
+			setState(141);
+			match(RPAREN);
+			setState(142);
+			match(LBRACE);
+			setState(143);
+			program();
+			setState(144);
+			match(RBRACE);
+			setState(150);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==ELSE) {
+				{
+				setState(145);
+				match(ELSE);
+				setState(146);
+				match(LBRACE);
+				setState(147);
+				program();
+				setState(148);
+				match(RBRACE);
+				}
+			}
+
 			}
 		}
 		catch (RecognitionException re) {
@@ -552,29 +1038,29 @@ public class GeometryParser extends Parser {
 
 	public final FigureDeclarationContext figureDeclaration() throws RecognitionException {
 		FigureDeclarationContext _localctx = new FigureDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_figureDeclaration);
+		enterRule(_localctx, 26, RULE_figureDeclaration);
 		try {
-			setState(99);
+			setState(161);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case POINT:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(90);
+				setState(152);
 				pointDeclaration();
 				}
 				break;
 			case LINE:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(91);
+				setState(153);
 				lineDeclaration();
 				}
 				break;
 			case SEGMENT:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(92);
+				setState(154);
 				segmentDeclaration();
 				}
 				break;
@@ -583,42 +1069,42 @@ public class GeometryParser extends Parser {
 			case ISOSCELES_TRIANGLE:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(93);
+				setState(155);
 				triangleDeclaration();
 				}
 				break;
 			case SQUARE:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(94);
+				setState(156);
 				squareDeclaration();
 				}
 				break;
 			case RECTANGLE:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(95);
+				setState(157);
 				rectangleDeclaration();
 				}
 				break;
 			case PARALLELOGRAM:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(96);
+				setState(158);
 				parallelogramDeclaration();
 				}
 				break;
 			case CIRCLE:
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(97);
+				setState(159);
 				circleDeclaration();
 				}
 				break;
 			case ELLIPSE:
 				enterOuterAlt(_localctx, 9);
 				{
-				setState(98);
+				setState(160);
 				ellipseDeclaration();
 				}
 				break;
@@ -661,15 +1147,15 @@ public class GeometryParser extends Parser {
 
 	public final AreaCallContext areaCall() throws RecognitionException {
 		AreaCallContext _localctx = new AreaCallContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_areaCall);
+		enterRule(_localctx, 28, RULE_areaCall);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(101);
+			setState(163);
 			match(T__0);
-			setState(102);
+			setState(164);
 			match(LPAREN);
-			setState(103);
+			setState(165);
 			match(RPAREN);
 			}
 		}
@@ -708,15 +1194,15 @@ public class GeometryParser extends Parser {
 
 	public final PerimeterCallContext perimeterCall() throws RecognitionException {
 		PerimeterCallContext _localctx = new PerimeterCallContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_perimeterCall);
+		enterRule(_localctx, 30, RULE_perimeterCall);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(105);
+			setState(167);
 			match(T__1);
-			setState(106);
+			setState(168);
 			match(LPAREN);
-			setState(107);
+			setState(169);
 			match(RPAREN);
 			}
 		}
@@ -755,15 +1241,15 @@ public class GeometryParser extends Parser {
 
 	public final DiagonalCallContext diagonalCall() throws RecognitionException {
 		DiagonalCallContext _localctx = new DiagonalCallContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_diagonalCall);
+		enterRule(_localctx, 32, RULE_diagonalCall);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(109);
+			setState(171);
 			match(T__2);
-			setState(110);
+			setState(172);
 			match(LPAREN);
-			setState(111);
+			setState(173);
 			match(RPAREN);
 			}
 		}
@@ -809,23 +1295,23 @@ public class GeometryParser extends Parser {
 
 	public final PointDeclarationContext pointDeclaration() throws RecognitionException {
 		PointDeclarationContext _localctx = new PointDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_pointDeclaration);
+		enterRule(_localctx, 34, RULE_pointDeclaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(113);
+			setState(175);
 			match(POINT);
-			setState(114);
+			setState(176);
 			match(ID);
-			setState(115);
+			setState(177);
 			match(LPAREN);
-			setState(116);
+			setState(178);
 			match(NUM);
-			setState(117);
+			setState(179);
 			match(COMMA);
-			setState(118);
+			setState(180);
 			match(NUM);
-			setState(119);
+			setState(181);
 			match(RPAREN);
 			}
 		}
@@ -873,23 +1359,23 @@ public class GeometryParser extends Parser {
 
 	public final LineDeclarationContext lineDeclaration() throws RecognitionException {
 		LineDeclarationContext _localctx = new LineDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_lineDeclaration);
+		enterRule(_localctx, 36, RULE_lineDeclaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(121);
+			setState(183);
 			match(LINE);
-			setState(122);
+			setState(184);
 			match(ID);
-			setState(123);
+			setState(185);
 			match(LPAREN);
-			setState(124);
+			setState(186);
 			point();
-			setState(125);
+			setState(187);
 			match(COMMA);
-			setState(126);
+			setState(188);
 			point();
-			setState(127);
+			setState(189);
 			match(RPAREN);
 			}
 		}
@@ -937,23 +1423,23 @@ public class GeometryParser extends Parser {
 
 	public final SegmentDeclarationContext segmentDeclaration() throws RecognitionException {
 		SegmentDeclarationContext _localctx = new SegmentDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_segmentDeclaration);
+		enterRule(_localctx, 38, RULE_segmentDeclaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(129);
+			setState(191);
 			match(SEGMENT);
-			setState(130);
+			setState(192);
 			match(ID);
-			setState(131);
+			setState(193);
 			match(LPAREN);
-			setState(132);
+			setState(194);
 			point();
-			setState(133);
+			setState(195);
 			match(COMMA);
-			setState(134);
+			setState(196);
 			point();
-			setState(135);
+			setState(197);
 			match(RPAREN);
 			}
 		}
@@ -1026,46 +1512,46 @@ public class GeometryParser extends Parser {
 
 	public final TriangleDeclarationContext triangleDeclaration() throws RecognitionException {
 		TriangleDeclarationContext _localctx = new TriangleDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_triangleDeclaration);
+		enterRule(_localctx, 40, RULE_triangleDeclaration);
 		int _la;
 		try {
-			setState(211);
+			setState(273);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,13,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(137);
+				setState(199);
 				match(TRIANGLE);
-				setState(138);
+				setState(200);
 				match(ID);
-				setState(139);
+				setState(201);
 				match(LPAREN);
-				setState(140);
+				setState(202);
 				point();
-				setState(141);
+				setState(203);
 				match(COMMA);
-				setState(142);
+				setState(204);
 				point();
-				setState(143);
+				setState(205);
 				match(COMMA);
-				setState(144);
+				setState(206);
 				point();
-				setState(145);
+				setState(207);
 				match(RPAREN);
-				setState(150);
+				setState(212);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==ARROW) {
 					{
 					{
-					setState(146);
+					setState(208);
 					match(ARROW);
-					setState(147);
+					setState(209);
 					triangleProperty();
 					}
 					}
-					setState(152);
+					setState(214);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
@@ -1074,37 +1560,37 @@ public class GeometryParser extends Parser {
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(153);
+				setState(215);
 				match(TRIANGLE);
-				setState(154);
+				setState(216);
 				match(ID);
-				setState(155);
+				setState(217);
 				match(LPAREN);
-				setState(156);
+				setState(218);
 				aliasVertex();
-				setState(157);
+				setState(219);
 				match(COMMA);
-				setState(158);
+				setState(220);
 				aliasVertex();
-				setState(159);
+				setState(221);
 				match(COMMA);
-				setState(160);
+				setState(222);
 				aliasVertex();
-				setState(161);
+				setState(223);
 				match(RPAREN);
-				setState(166);
+				setState(228);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==ARROW) {
 					{
 					{
-					setState(162);
+					setState(224);
 					match(ARROW);
-					setState(163);
+					setState(225);
 					triangleProperty();
 					}
 					}
-					setState(168);
+					setState(230);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
@@ -1113,37 +1599,37 @@ public class GeometryParser extends Parser {
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(169);
+				setState(231);
 				match(TRIANGLE);
-				setState(170);
+				setState(232);
 				match(ID);
-				setState(171);
+				setState(233);
 				match(LPAREN);
-				setState(172);
+				setState(234);
 				match(NUM);
-				setState(173);
+				setState(235);
 				match(COMMA);
-				setState(174);
+				setState(236);
 				match(NUM);
-				setState(175);
+				setState(237);
 				match(COMMA);
-				setState(176);
+				setState(238);
 				match(NUM);
-				setState(177);
+				setState(239);
 				match(RPAREN);
-				setState(182);
+				setState(244);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==ARROW) {
 					{
 					{
-					setState(178);
+					setState(240);
 					match(ARROW);
-					setState(179);
+					setState(241);
 					triangleProperty();
 					}
 					}
-					setState(184);
+					setState(246);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
@@ -1152,29 +1638,29 @@ public class GeometryParser extends Parser {
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(185);
+				setState(247);
 				match(EQUILATERAL_TRIANGLE);
-				setState(186);
+				setState(248);
 				match(ID);
-				setState(187);
+				setState(249);
 				match(LPAREN);
-				setState(188);
+				setState(250);
 				match(NUM);
-				setState(189);
+				setState(251);
 				match(RPAREN);
-				setState(194);
+				setState(256);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==ARROW) {
 					{
 					{
-					setState(190);
+					setState(252);
 					match(ARROW);
-					setState(191);
+					setState(253);
 					triangleProperty();
 					}
 					}
-					setState(196);
+					setState(258);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
@@ -1183,33 +1669,33 @@ public class GeometryParser extends Parser {
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(197);
+				setState(259);
 				match(ISOSCELES_TRIANGLE);
-				setState(198);
+				setState(260);
 				match(ID);
-				setState(199);
+				setState(261);
 				match(LPAREN);
-				setState(200);
+				setState(262);
 				match(NUM);
-				setState(201);
+				setState(263);
 				match(COMMA);
-				setState(202);
+				setState(264);
 				match(NUM);
-				setState(203);
+				setState(265);
 				match(RPAREN);
-				setState(208);
+				setState(270);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==ARROW) {
 					{
 					{
-					setState(204);
+					setState(266);
 					match(ARROW);
-					setState(205);
+					setState(267);
 					triangleProperty();
 					}
 					}
-					setState(210);
+					setState(272);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
@@ -1252,15 +1738,15 @@ public class GeometryParser extends Parser {
 
 	public final AliasVertexContext aliasVertex() throws RecognitionException {
 		AliasVertexContext _localctx = new AliasVertexContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_aliasVertex);
+		enterRule(_localctx, 42, RULE_aliasVertex);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(213);
+			setState(275);
 			match(ID);
-			setState(214);
+			setState(276);
 			match(T__3);
-			setState(215);
+			setState(277);
 			match(NUM);
 			}
 		}
@@ -1306,29 +1792,29 @@ public class GeometryParser extends Parser {
 
 	public final TrianglePropertyContext triangleProperty() throws RecognitionException {
 		TrianglePropertyContext _localctx = new TrianglePropertyContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_triangleProperty);
+		enterRule(_localctx, 44, RULE_triangleProperty);
 		try {
-			setState(220);
+			setState(282);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case BISECTOR:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(217);
+				setState(279);
 				bisectorDeclaration();
 				}
 				break;
 			case ANGLE:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(218);
+				setState(280);
 				angleDeclaration();
 				}
 				break;
 			case HEIGHT:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(219);
+				setState(281);
 				heightDeclaration();
 				}
 				break;
@@ -1373,17 +1859,17 @@ public class GeometryParser extends Parser {
 
 	public final BisectorDeclarationContext bisectorDeclaration() throws RecognitionException {
 		BisectorDeclarationContext _localctx = new BisectorDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_bisectorDeclaration);
+		enterRule(_localctx, 46, RULE_bisectorDeclaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(222);
+			setState(284);
 			match(BISECTOR);
-			setState(223);
+			setState(285);
 			match(LPAREN);
-			setState(224);
+			setState(286);
 			match(ID);
-			setState(225);
+			setState(287);
 			match(RPAREN);
 			}
 		}
@@ -1426,21 +1912,21 @@ public class GeometryParser extends Parser {
 
 	public final AngleDeclarationContext angleDeclaration() throws RecognitionException {
 		AngleDeclarationContext _localctx = new AngleDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_angleDeclaration);
+		enterRule(_localctx, 48, RULE_angleDeclaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(227);
+			setState(289);
 			match(ANGLE);
-			setState(228);
+			setState(290);
 			match(LPAREN);
-			setState(229);
+			setState(291);
 			match(ID);
-			setState(230);
+			setState(292);
 			match(COMMA);
-			setState(231);
+			setState(293);
 			match(NUM);
-			setState(232);
+			setState(294);
 			match(RPAREN);
 			}
 		}
@@ -1483,38 +1969,38 @@ public class GeometryParser extends Parser {
 
 	public final HeightDeclarationContext heightDeclaration() throws RecognitionException {
 		HeightDeclarationContext _localctx = new HeightDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 36, RULE_heightDeclaration);
+		enterRule(_localctx, 50, RULE_heightDeclaration);
 		try {
-			setState(244);
+			setState(306);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,12,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(234);
+				setState(296);
 				match(HEIGHT);
-				setState(235);
+				setState(297);
 				match(LPAREN);
-				setState(236);
+				setState(298);
 				match(ID);
-				setState(237);
+				setState(299);
 				match(RPAREN);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(238);
+				setState(300);
 				match(HEIGHT);
-				setState(239);
+				setState(301);
 				match(LPAREN);
-				setState(240);
+				setState(302);
 				match(ID);
-				setState(241);
+				setState(303);
 				match(COMMA);
-				setState(242);
+				setState(304);
 				match(NUM);
-				setState(243);
+				setState(305);
 				match(RPAREN);
 				}
 				break;
@@ -1560,40 +2046,40 @@ public class GeometryParser extends Parser {
 
 	public final SquareDeclarationContext squareDeclaration() throws RecognitionException {
 		SquareDeclarationContext _localctx = new SquareDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 38, RULE_squareDeclaration);
+		enterRule(_localctx, 52, RULE_squareDeclaration);
 		try {
-			setState(257);
+			setState(319);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,13,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(246);
+				setState(308);
 				match(SQUARE);
-				setState(247);
+				setState(309);
 				match(ID);
-				setState(248);
+				setState(310);
 				match(LPAREN);
-				setState(249);
+				setState(311);
 				match(NUM);
-				setState(250);
+				setState(312);
 				match(RPAREN);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(251);
+				setState(313);
 				match(SQUARE);
-				setState(252);
+				setState(314);
 				match(ID);
-				setState(253);
+				setState(315);
 				match(T__4);
-				setState(254);
+				setState(316);
 				match(EQUAL);
-				setState(255);
+				setState(317);
 				match(NUM);
-				setState(256);
+				setState(318);
 				match(SEMICOLON);
 				}
 				break;
@@ -1646,52 +2132,52 @@ public class GeometryParser extends Parser {
 
 	public final RectangleDeclarationContext rectangleDeclaration() throws RecognitionException {
 		RectangleDeclarationContext _localctx = new RectangleDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 40, RULE_rectangleDeclaration);
+		enterRule(_localctx, 54, RULE_rectangleDeclaration);
 		try {
-			setState(276);
+			setState(338);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,17,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(259);
+				setState(321);
 				match(RECTANGLE);
-				setState(260);
+				setState(322);
 				match(ID);
-				setState(261);
+				setState(323);
 				match(LPAREN);
-				setState(262);
+				setState(324);
 				match(NUM);
-				setState(263);
+				setState(325);
 				match(COMMA);
-				setState(264);
+				setState(326);
 				match(NUM);
-				setState(265);
+				setState(327);
 				match(RPAREN);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(266);
+				setState(328);
 				match(RECTANGLE);
-				setState(267);
+				setState(329);
 				match(ID);
-				setState(268);
+				setState(330);
 				match(T__5);
-				setState(269);
+				setState(331);
 				match(EQUAL);
-				setState(270);
+				setState(332);
 				match(NUM);
-				setState(271);
+				setState(333);
 				match(COMMA);
-				setState(272);
+				setState(334);
 				match(T__6);
-				setState(273);
+				setState(335);
 				match(EQUAL);
-				setState(274);
+				setState(336);
 				match(NUM);
-				setState(275);
+				setState(337);
 				match(SEMICOLON);
 				}
 				break;
@@ -1742,27 +2228,27 @@ public class GeometryParser extends Parser {
 
 	public final ParallelogramDeclarationContext parallelogramDeclaration() throws RecognitionException {
 		ParallelogramDeclarationContext _localctx = new ParallelogramDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 42, RULE_parallelogramDeclaration);
+		enterRule(_localctx, 56, RULE_parallelogramDeclaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(278);
+			setState(340);
 			match(PARALLELOGRAM);
-			setState(279);
+			setState(341);
 			match(ID);
-			setState(280);
+			setState(342);
 			match(LPAREN);
-			setState(281);
+			setState(343);
 			match(NUM);
-			setState(282);
+			setState(344);
 			match(COMMA);
-			setState(283);
+			setState(345);
 			match(NUM);
-			setState(284);
+			setState(346);
 			match(COMMA);
-			setState(285);
+			setState(347);
 			match(NUM);
-			setState(286);
+			setState(348);
 			match(RPAREN);
 			}
 		}
@@ -1804,19 +2290,19 @@ public class GeometryParser extends Parser {
 
 	public final CircleDeclarationContext circleDeclaration() throws RecognitionException {
 		CircleDeclarationContext _localctx = new CircleDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 44, RULE_circleDeclaration);
+		enterRule(_localctx, 58, RULE_circleDeclaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(288);
+			setState(350);
 			match(CIRCLE);
-			setState(289);
+			setState(351);
 			match(ID);
-			setState(290);
+			setState(352);
 			match(LPAREN);
-			setState(291);
+			setState(353);
 			match(NUM);
-			setState(292);
+			setState(354);
 			match(RPAREN);
 			}
 		}
@@ -1862,23 +2348,23 @@ public class GeometryParser extends Parser {
 
 	public final EllipseDeclarationContext ellipseDeclaration() throws RecognitionException {
 		EllipseDeclarationContext _localctx = new EllipseDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 46, RULE_ellipseDeclaration);
+		enterRule(_localctx, 60, RULE_ellipseDeclaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(294);
+			setState(356);
 			match(ELLIPSE);
-			setState(295);
+			setState(357);
 			match(ID);
-			setState(296);
+			setState(358);
 			match(LPAREN);
-			setState(297);
+			setState(359);
 			match(NUM);
-			setState(298);
+			setState(360);
 			match(COMMA);
-			setState(299);
+			setState(361);
 			match(NUM);
-			setState(300);
+			setState(362);
 			match(RPAREN);
 			}
 		}
@@ -1919,19 +2405,19 @@ public class GeometryParser extends Parser {
 
 	public final RhombusDeclarationContext rhombusDeclaration() throws RecognitionException {
 		RhombusDeclarationContext _localctx = new RhombusDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 48, RULE_rhombusDeclaration);
+		enterRule(_localctx, 62, RULE_rhombusDeclaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(302);
+			setState(364);
 			match(RHOMBUS);
-			setState(303);
+			setState(365);
 			match(ID);
-			setState(304);
+			setState(366);
 			match(LPAREN);
-			setState(305);
+			setState(367);
 			match(NUM);
-			setState(306);
+			setState(368);
 			match(RPAREN);
 			}
 		}
@@ -1976,23 +2462,23 @@ public class GeometryParser extends Parser {
 
 	public final VariableDeclarationContext variableDeclaration() throws RecognitionException {
 		VariableDeclarationContext _localctx = new VariableDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 50, RULE_variableDeclaration);
+		enterRule(_localctx, 64, RULE_variableDeclaration);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(308);
+			setState(370);
 			type();
-			setState(309);
+			setState(371);
 			match(ID);
-			setState(312);
+			setState(374);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==EQUAL) {
 				{
-				setState(310);
+				setState(372);
 				match(EQUAL);
-				setState(311);
+				setState(373);
 				expression(0);
 				}
 			}
@@ -2032,12 +2518,12 @@ public class GeometryParser extends Parser {
 
 	public final TypeContext type() throws RecognitionException {
 		TypeContext _localctx = new TypeContext(_ctx, getState());
-		enterRule(_localctx, 52, RULE_type);
+		enterRule(_localctx, 66, RULE_type);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(314);
+			setState(376);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__7) | (1L << T__8) | (1L << T__9))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -2106,53 +2592,53 @@ public class GeometryParser extends Parser {
 		int _parentState = getState();
 		ExpressionContext _localctx = new ExpressionContext(_ctx, _parentState);
 		ExpressionContext _prevctx = _localctx;
-		int _startState = 54;
-		enterRecursionRule(_localctx, 54, RULE_expression, _p);
+		int _startState = 68;
+		enterRecursionRule(_localctx, 68, RULE_expression, _p);
 		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(326);
+			setState(388);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case NUM:
 				{
-				setState(317);
+				setState(379);
 				match(NUM);
 				}
 				break;
 			case TRUE:
 				{
-				setState(318);
+				setState(380);
 				match(TRUE);
 				}
 				break;
 			case FALSE:
 				{
-				setState(319);
+				setState(381);
 				match(FALSE);
 				}
 				break;
 			case STRING:
 				{
-				setState(320);
+				setState(382);
 				match(STRING);
 				}
 				break;
 			case ID:
 				{
-				setState(321);
+				setState(383);
 				match(ID);
 				}
 				break;
 			case LPAREN:
 				{
-				setState(322);
+				setState(384);
 				match(LPAREN);
-				setState(323);
+				setState(385);
 				expression(0);
-				setState(324);
+				setState(386);
 				match(RPAREN);
 				}
 				break;
@@ -2160,9 +2646,9 @@ public class GeometryParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(333);
+			setState(395);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,17,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,20,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
@@ -2171,9 +2657,9 @@ public class GeometryParser extends Parser {
 					{
 					_localctx = new ExpressionContext(_parentctx, _parentState);
 					pushNewRecursionContext(_localctx, _startState, RULE_expression);
-					setState(328);
+					setState(390);
 					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-					setState(329);
+					setState(391);
 					_la = _input.LA(1);
 					if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << PLUS) | (1L << MINUS) | (1L << MUL) | (1L << DIV))) != 0)) ) {
 					_errHandler.recoverInline(this);
@@ -2183,14 +2669,14 @@ public class GeometryParser extends Parser {
 						_errHandler.reportMatch(this);
 						consume();
 					}
-					setState(330);
+					setState(392);
 					expression(3);
 					}
 					} 
 				}
-				setState(335);
+				setState(397);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,17,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,20,_ctx);
 			}
 			}
 		}
@@ -2228,11 +2714,11 @@ public class GeometryParser extends Parser {
 
 	public final PointContext point() throws RecognitionException {
 		PointContext _localctx = new PointContext(_ctx, getState());
-		enterRule(_localctx, 56, RULE_point);
+		enterRule(_localctx, 70, RULE_point);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(336);
+			setState(398);
 			match(ID);
 			}
 		}
@@ -2271,12 +2757,12 @@ public class GeometryParser extends Parser {
 
 	public final CommentContext comment() throws RecognitionException {
 		CommentContext _localctx = new CommentContext(_ctx, getState());
-		enterRule(_localctx, 58, RULE_comment);
+		enterRule(_localctx, 72, RULE_comment);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(338);
+			setState(400);
 			_la = _input.LA(1);
 			if ( !(_la==COMMENT || _la==ML_COMMENT) ) {
 			_errHandler.recoverInline(this);
@@ -2301,7 +2787,7 @@ public class GeometryParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 27:
+		case 34:
 			return expression_sempred((ExpressionContext)_localctx, predIndex);
 		}
 		return true;
@@ -2315,117 +2801,139 @@ public class GeometryParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3/\u0157\4\2\t\2\4"+
-		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
-		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\65\u0195\4\2\t\2"+
+		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
+		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
-		"\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\4\36\t\36\4\37\t\37\3\2\3\2\3"+
-		"\2\6\2B\n\2\r\2\16\2C\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3M\n\3\3\4\3\4\3\4"+
-		"\3\5\3\5\3\6\3\6\3\6\3\6\3\7\3\7\3\7\5\7[\n\7\3\b\3\b\3\b\3\b\3\b\3\b"+
-		"\3\b\3\b\3\b\5\bf\n\b\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3\n\3\13\3\13\3\13\3"+
-		"\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3"+
-		"\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3\17\3\17\3"+
-		"\17\3\17\3\17\3\17\3\17\7\17\u0097\n\17\f\17\16\17\u009a\13\17\3\17\3"+
-		"\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\7\17\u00a7\n\17\f\17"+
-		"\16\17\u00aa\13\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3"+
-		"\17\7\17\u00b7\n\17\f\17\16\17\u00ba\13\17\3\17\3\17\3\17\3\17\3\17\3"+
-		"\17\3\17\7\17\u00c3\n\17\f\17\16\17\u00c6\13\17\3\17\3\17\3\17\3\17\3"+
-		"\17\3\17\3\17\3\17\3\17\7\17\u00d1\n\17\f\17\16\17\u00d4\13\17\5\17\u00d6"+
-		"\n\17\3\20\3\20\3\20\3\20\3\21\3\21\3\21\5\21\u00df\n\21\3\22\3\22\3\22"+
-		"\3\22\3\22\3\23\3\23\3\23\3\23\3\23\3\23\3\23\3\24\3\24\3\24\3\24\3\24"+
-		"\3\24\3\24\3\24\3\24\3\24\5\24\u00f7\n\24\3\25\3\25\3\25\3\25\3\25\3\25"+
-		"\3\25\3\25\3\25\3\25\3\25\5\25\u0104\n\25\3\26\3\26\3\26\3\26\3\26\3\26"+
-		"\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\5\26\u0117\n\26"+
-		"\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\30\3\30\3\30\3\30"+
-		"\3\30\3\30\3\31\3\31\3\31\3\31\3\31\3\31\3\31\3\31\3\32\3\32\3\32\3\32"+
-		"\3\32\3\32\3\33\3\33\3\33\3\33\5\33\u013b\n\33\3\34\3\34\3\35\3\35\3\35"+
-		"\3\35\3\35\3\35\3\35\3\35\3\35\3\35\5\35\u0149\n\35\3\35\3\35\3\35\7\35"+
-		"\u014e\n\35\f\35\16\35\u0151\13\35\3\36\3\36\3\37\3\37\3\37\2\38 \2\4"+
-		"\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<\2\5\3\2\n"+
-		"\f\3\2\16\21\3\2./\2\u015c\2A\3\2\2\2\4L\3\2\2\2\6N\3\2\2\2\bQ\3\2\2\2"+
-		"\nS\3\2\2\2\fZ\3\2\2\2\16e\3\2\2\2\20g\3\2\2\2\22k\3\2\2\2\24o\3\2\2\2"+
-		"\26s\3\2\2\2\30{\3\2\2\2\32\u0083\3\2\2\2\34\u00d5\3\2\2\2\36\u00d7\3"+
-		"\2\2\2 \u00de\3\2\2\2\"\u00e0\3\2\2\2$\u00e5\3\2\2\2&\u00f6\3\2\2\2(\u0103"+
-		"\3\2\2\2*\u0116\3\2\2\2,\u0118\3\2\2\2.\u0122\3\2\2\2\60\u0128\3\2\2\2"+
-		"\62\u0130\3\2\2\2\64\u0136\3\2\2\2\66\u013c\3\2\2\28\u0148\3\2\2\2:\u0152"+
-		"\3\2\2\2<\u0154\3\2\2\2>B\5\4\3\2?B\5\b\5\2@B\5\6\4\2A>\3\2\2\2A?\3\2"+
-		"\2\2A@\3\2\2\2BC\3\2\2\2CA\3\2\2\2CD\3\2\2\2D\3\3\2\2\2EF\5\16\b\2FG\7"+
-		"\'\2\2GM\3\2\2\2HI\5\64\33\2IJ\7\'\2\2JM\3\2\2\2KM\5<\37\2LE\3\2\2\2L"+
-		"H\3\2\2\2LK\3\2\2\2M\5\3\2\2\2NO\5\n\6\2OP\7\'\2\2P\7\3\2\2\2QR\7.\2\2"+
-		"R\t\3\2\2\2ST\7$\2\2TU\7\22\2\2UV\5\f\7\2V\13\3\2\2\2W[\5\20\t\2X[\5\22"+
-		"\n\2Y[\5\24\13\2ZW\3\2\2\2ZX\3\2\2\2ZY\3\2\2\2[\r\3\2\2\2\\f\5\26\f\2"+
-		"]f\5\30\r\2^f\5\32\16\2_f\5\34\17\2`f\5(\25\2af\5*\26\2bf\5,\27\2cf\5"+
-		".\30\2df\5\60\31\2e\\\3\2\2\2e]\3\2\2\2e^\3\2\2\2e_\3\2\2\2e`\3\2\2\2"+
-		"ea\3\2\2\2eb\3\2\2\2ec\3\2\2\2ed\3\2\2\2f\17\3\2\2\2gh\7\3\2\2hi\7)\2"+
-		"\2ij\7*\2\2j\21\3\2\2\2kl\7\4\2\2lm\7)\2\2mn\7*\2\2n\23\3\2\2\2op\7\5"+
-		"\2\2pq\7)\2\2qr\7*\2\2r\25\3\2\2\2st\7\23\2\2tu\7$\2\2uv\7)\2\2vw\7#\2"+
-		"\2wx\7(\2\2xy\7#\2\2yz\7*\2\2z\27\3\2\2\2{|\7\24\2\2|}\7$\2\2}~\7)\2\2"+
-		"~\177\5:\36\2\177\u0080\7(\2\2\u0080\u0081\5:\36\2\u0081\u0082\7*\2\2"+
-		"\u0082\31\3\2\2\2\u0083\u0084\7\25\2\2\u0084\u0085\7$\2\2\u0085\u0086"+
-		"\7)\2\2\u0086\u0087\5:\36\2\u0087\u0088\7(\2\2\u0088\u0089\5:\36\2\u0089"+
-		"\u008a\7*\2\2\u008a\33\3\2\2\2\u008b\u008c\7\26\2\2\u008c\u008d\7$\2\2"+
-		"\u008d\u008e\7)\2\2\u008e\u008f\5:\36\2\u008f\u0090\7(\2\2\u0090\u0091"+
-		"\5:\36\2\u0091\u0092\7(\2\2\u0092\u0093\5:\36\2\u0093\u0098\7*\2\2\u0094"+
-		"\u0095\7\22\2\2\u0095\u0097\5 \21\2\u0096\u0094\3\2\2\2\u0097\u009a\3"+
-		"\2\2\2\u0098\u0096\3\2\2\2\u0098\u0099\3\2\2\2\u0099\u00d6\3\2\2\2\u009a"+
-		"\u0098\3\2\2\2\u009b\u009c\7\26\2\2\u009c\u009d\7$\2\2\u009d\u009e\7)"+
-		"\2\2\u009e\u009f\5\36\20\2\u009f\u00a0\7(\2\2\u00a0\u00a1\5\36\20\2\u00a1"+
-		"\u00a2\7(\2\2\u00a2\u00a3\5\36\20\2\u00a3\u00a8\7*\2\2\u00a4\u00a5\7\22"+
-		"\2\2\u00a5\u00a7\5 \21\2\u00a6\u00a4\3\2\2\2\u00a7\u00aa\3\2\2\2\u00a8"+
-		"\u00a6\3\2\2\2\u00a8\u00a9\3\2\2\2\u00a9\u00d6\3\2\2\2\u00aa\u00a8\3\2"+
-		"\2\2\u00ab\u00ac\7\26\2\2\u00ac\u00ad\7$\2\2\u00ad\u00ae\7)\2\2\u00ae"+
-		"\u00af\7#\2\2\u00af\u00b0\7(\2\2\u00b0\u00b1\7#\2\2\u00b1\u00b2\7(\2\2"+
-		"\u00b2\u00b3\7#\2\2\u00b3\u00b8\7*\2\2\u00b4\u00b5\7\22\2\2\u00b5\u00b7"+
-		"\5 \21\2\u00b6\u00b4\3\2\2\2\u00b7\u00ba\3\2\2\2\u00b8\u00b6\3\2\2\2\u00b8"+
-		"\u00b9\3\2\2\2\u00b9\u00d6\3\2\2\2\u00ba\u00b8\3\2\2\2\u00bb\u00bc\7\30"+
-		"\2\2\u00bc\u00bd\7$\2\2\u00bd\u00be\7)\2\2\u00be\u00bf\7#\2\2\u00bf\u00c4"+
-		"\7*\2\2\u00c0\u00c1\7\22\2\2\u00c1\u00c3\5 \21\2\u00c2\u00c0\3\2\2\2\u00c3"+
-		"\u00c6\3\2\2\2\u00c4\u00c2\3\2\2\2\u00c4\u00c5\3\2\2\2\u00c5\u00d6\3\2"+
-		"\2\2\u00c6\u00c4\3\2\2\2\u00c7\u00c8\7\31\2\2\u00c8\u00c9\7$\2\2\u00c9"+
-		"\u00ca\7)\2\2\u00ca\u00cb\7#\2\2\u00cb\u00cc\7(\2\2\u00cc\u00cd\7#\2\2"+
-		"\u00cd\u00d2\7*\2\2\u00ce\u00cf\7\22\2\2\u00cf\u00d1\5 \21\2\u00d0\u00ce"+
-		"\3\2\2\2\u00d1\u00d4\3\2\2\2\u00d2\u00d0\3\2\2\2\u00d2\u00d3\3\2\2\2\u00d3"+
-		"\u00d6\3\2\2\2\u00d4\u00d2\3\2\2\2\u00d5\u008b\3\2\2\2\u00d5\u009b\3\2"+
-		"\2\2\u00d5\u00ab\3\2\2\2\u00d5\u00bb\3\2\2\2\u00d5\u00c7\3\2\2\2\u00d6"+
-		"\35\3\2\2\2\u00d7\u00d8\7$\2\2\u00d8\u00d9\7\6\2\2\u00d9\u00da\7#\2\2"+
-		"\u00da\37\3\2\2\2\u00db\u00df\5\"\22\2\u00dc\u00df\5$\23\2\u00dd\u00df"+
-		"\5&\24\2\u00de\u00db\3\2\2\2\u00de\u00dc\3\2\2\2\u00de\u00dd\3\2\2\2\u00df"+
-		"!\3\2\2\2\u00e0\u00e1\7 \2\2\u00e1\u00e2\7)\2\2\u00e2\u00e3\7$\2\2\u00e3"+
-		"\u00e4\7*\2\2\u00e4#\3\2\2\2\u00e5\u00e6\7!\2\2\u00e6\u00e7\7)\2\2\u00e7"+
-		"\u00e8\7$\2\2\u00e8\u00e9\7(\2\2\u00e9\u00ea\7#\2\2\u00ea\u00eb\7*\2\2"+
-		"\u00eb%\3\2\2\2\u00ec\u00ed\7\27\2\2\u00ed\u00ee\7)\2\2\u00ee\u00ef\7"+
-		"$\2\2\u00ef\u00f7\7*\2\2\u00f0\u00f1\7\27\2\2\u00f1\u00f2\7)\2\2\u00f2"+
-		"\u00f3\7$\2\2\u00f3\u00f4\7(\2\2\u00f4\u00f5\7#\2\2\u00f5\u00f7\7*\2\2"+
-		"\u00f6\u00ec\3\2\2\2\u00f6\u00f0\3\2\2\2\u00f7\'\3\2\2\2\u00f8\u00f9\7"+
-		"\32\2\2\u00f9\u00fa\7$\2\2\u00fa\u00fb\7)\2\2\u00fb\u00fc\7#\2\2\u00fc"+
-		"\u0104\7*\2\2\u00fd\u00fe\7\32\2\2\u00fe\u00ff\7$\2\2\u00ff\u0100\7\7"+
-		"\2\2\u0100\u0101\7\r\2\2\u0101\u0102\7#\2\2\u0102\u0104\7\'\2\2\u0103"+
-		"\u00f8\3\2\2\2\u0103\u00fd\3\2\2\2\u0104)\3\2\2\2\u0105\u0106\7\33\2\2"+
-		"\u0106\u0107\7$\2\2\u0107\u0108\7)\2\2\u0108\u0109\7#\2\2\u0109\u010a"+
-		"\7(\2\2\u010a\u010b\7#\2\2\u010b\u0117\7*\2\2\u010c\u010d\7\33\2\2\u010d"+
-		"\u010e\7$\2\2\u010e\u010f\7\b\2\2\u010f\u0110\7\r\2\2\u0110\u0111\7#\2"+
-		"\2\u0111\u0112\7(\2\2\u0112\u0113\7\t\2\2\u0113\u0114\7\r\2\2\u0114\u0115"+
-		"\7#\2\2\u0115\u0117\7\'\2\2\u0116\u0105\3\2\2\2\u0116\u010c\3\2\2\2\u0117"+
-		"+\3\2\2\2\u0118\u0119\7\34\2\2\u0119\u011a\7$\2\2\u011a\u011b\7)\2\2\u011b"+
-		"\u011c\7#\2\2\u011c\u011d\7(\2\2\u011d\u011e\7#\2\2\u011e\u011f\7(\2\2"+
-		"\u011f\u0120\7#\2\2\u0120\u0121\7*\2\2\u0121-\3\2\2\2\u0122\u0123\7\35"+
-		"\2\2\u0123\u0124\7$\2\2\u0124\u0125\7)\2\2\u0125\u0126\7#\2\2\u0126\u0127"+
-		"\7*\2\2\u0127/\3\2\2\2\u0128\u0129\7\36\2\2\u0129\u012a\7$\2\2\u012a\u012b"+
-		"\7)\2\2\u012b\u012c\7#\2\2\u012c\u012d\7(\2\2\u012d\u012e\7#\2\2\u012e"+
-		"\u012f\7*\2\2\u012f\61\3\2\2\2\u0130\u0131\7\37\2\2\u0131\u0132\7$\2\2"+
-		"\u0132\u0133\7)\2\2\u0133\u0134\7#\2\2\u0134\u0135\7*\2\2\u0135\63\3\2"+
-		"\2\2\u0136\u0137\5\66\34\2\u0137\u013a\7$\2\2\u0138\u0139\7\r\2\2\u0139"+
-		"\u013b\58\35\2\u013a\u0138\3\2\2\2\u013a\u013b\3\2\2\2\u013b\65\3\2\2"+
-		"\2\u013c\u013d\t\2\2\2\u013d\67\3\2\2\2\u013e\u013f\b\35\1\2\u013f\u0149"+
-		"\7#\2\2\u0140\u0149\7+\2\2\u0141\u0149\7,\2\2\u0142\u0149\7-\2\2\u0143"+
-		"\u0149\7$\2\2\u0144\u0145\7)\2\2\u0145\u0146\58\35\2\u0146\u0147\7*\2"+
-		"\2\u0147\u0149\3\2\2\2\u0148\u013e\3\2\2\2\u0148\u0140\3\2\2\2\u0148\u0141"+
-		"\3\2\2\2\u0148\u0142\3\2\2\2\u0148\u0143\3\2\2\2\u0148\u0144\3\2\2\2\u0149"+
-		"\u014f\3\2\2\2\u014a\u014b\f\4\2\2\u014b\u014c\t\3\2\2\u014c\u014e\58"+
-		"\35\5\u014d\u014a\3\2\2\2\u014e\u0151\3\2\2\2\u014f\u014d\3\2\2\2\u014f"+
-		"\u0150\3\2\2\2\u01509\3\2\2\2\u0151\u014f\3\2\2\2\u0152\u0153\7$\2\2\u0153"+
-		";\3\2\2\2\u0154\u0155\t\4\2\2\u0155=\3\2\2\2\24ACLZe\u0098\u00a8\u00b8"+
-		"\u00c4\u00d2\u00d5\u00de\u00f6\u0103\u0116\u013a\u0148\u014f";
+		"\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\4\36\t\36\4\37\t\37\4 \t \4!"+
+		"\t!\4\"\t\"\4#\t#\4$\t$\4%\t%\4&\t&\3\2\3\2\3\2\3\2\3\2\6\2R\n\2\r\2\16"+
+		"\2S\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3]\n\3\3\4\3\4\3\4\3\5\3\5\3\6\3\6\3"+
+		"\6\3\6\3\7\3\7\3\7\5\7k\n\7\3\b\3\b\5\bo\n\b\3\t\3\t\3\t\3\t\3\t\3\t\3"+
+		"\t\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\13\3\13\5\13"+
+		"\u0087\n\13\3\f\3\f\3\r\3\r\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3"+
+		"\16\3\16\3\16\3\16\5\16\u0099\n\16\3\17\3\17\3\17\3\17\3\17\3\17\3\17"+
+		"\3\17\3\17\5\17\u00a4\n\17\3\20\3\20\3\20\3\20\3\21\3\21\3\21\3\21\3\22"+
+		"\3\22\3\22\3\22\3\23\3\23\3\23\3\23\3\23\3\23\3\23\3\23\3\24\3\24\3\24"+
+		"\3\24\3\24\3\24\3\24\3\24\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\26"+
+		"\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\7\26\u00d5\n\26\f\26"+
+		"\16\26\u00d8\13\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3"+
+		"\26\7\26\u00e5\n\26\f\26\16\26\u00e8\13\26\3\26\3\26\3\26\3\26\3\26\3"+
+		"\26\3\26\3\26\3\26\3\26\3\26\7\26\u00f5\n\26\f\26\16\26\u00f8\13\26\3"+
+		"\26\3\26\3\26\3\26\3\26\3\26\3\26\7\26\u0101\n\26\f\26\16\26\u0104\13"+
+		"\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\7\26\u010f\n\26\f\26"+
+		"\16\26\u0112\13\26\5\26\u0114\n\26\3\27\3\27\3\27\3\27\3\30\3\30\3\30"+
+		"\5\30\u011d\n\30\3\31\3\31\3\31\3\31\3\31\3\32\3\32\3\32\3\32\3\32\3\32"+
+		"\3\32\3\33\3\33\3\33\3\33\3\33\3\33\3\33\3\33\3\33\3\33\5\33\u0135\n\33"+
+		"\3\34\3\34\3\34\3\34\3\34\3\34\3\34\3\34\3\34\3\34\3\34\5\34\u0142\n\34"+
+		"\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35"+
+		"\3\35\3\35\3\35\5\35\u0155\n\35\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36"+
+		"\3\36\3\36\3\37\3\37\3\37\3\37\3\37\3\37\3 \3 \3 \3 \3 \3 \3 \3 \3!\3"+
+		"!\3!\3!\3!\3!\3\"\3\"\3\"\3\"\5\"\u0179\n\"\3#\3#\3$\3$\3$\3$\3$\3$\3"+
+		"$\3$\3$\3$\5$\u0187\n$\3$\3$\3$\7$\u018c\n$\f$\16$\u018f\13$\3%\3%\3&"+
+		"\3&\3&\2\3F\'\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64"+
+		"\668:<>@BDFHJ\2\5\3\2\n\f\3\2\16\21\3\2./\2\u0198\2Q\3\2\2\2\4\\\3\2\2"+
+		"\2\6^\3\2\2\2\ba\3\2\2\2\nc\3\2\2\2\fj\3\2\2\2\16n\3\2\2\2\20p\3\2\2\2"+
+		"\22|\3\2\2\2\24\u0086\3\2\2\2\26\u0088\3\2\2\2\30\u008a\3\2\2\2\32\u008c"+
+		"\3\2\2\2\34\u00a3\3\2\2\2\36\u00a5\3\2\2\2 \u00a9\3\2\2\2\"\u00ad\3\2"+
+		"\2\2$\u00b1\3\2\2\2&\u00b9\3\2\2\2(\u00c1\3\2\2\2*\u0113\3\2\2\2,\u0115"+
+		"\3\2\2\2.\u011c\3\2\2\2\60\u011e\3\2\2\2\62\u0123\3\2\2\2\64\u0134\3\2"+
+		"\2\2\66\u0141\3\2\2\28\u0154\3\2\2\2:\u0156\3\2\2\2<\u0160\3\2\2\2>\u0166"+
+		"\3\2\2\2@\u016e\3\2\2\2B\u0174\3\2\2\2D\u017a\3\2\2\2F\u0186\3\2\2\2H"+
+		"\u0190\3\2\2\2J\u0192\3\2\2\2LR\5\4\3\2MR\5\b\5\2NR\5\6\4\2OR\5\16\b\2"+
+		"PR\5\32\16\2QL\3\2\2\2QM\3\2\2\2QN\3\2\2\2QO\3\2\2\2QP\3\2\2\2RS\3\2\2"+
+		"\2SQ\3\2\2\2ST\3\2\2\2T\3\3\2\2\2UV\5\34\17\2VW\7\'\2\2W]\3\2\2\2XY\5"+
+		"B\"\2YZ\7\'\2\2Z]\3\2\2\2[]\5J&\2\\U\3\2\2\2\\X\3\2\2\2\\[\3\2\2\2]\5"+
+		"\3\2\2\2^_\5\n\6\2_`\7\'\2\2`\7\3\2\2\2ab\7.\2\2b\t\3\2\2\2cd\7$\2\2d"+
+		"e\7\22\2\2ef\5\f\7\2f\13\3\2\2\2gk\5\36\20\2hk\5 \21\2ik\5\"\22\2jg\3"+
+		"\2\2\2jh\3\2\2\2ji\3\2\2\2k\r\3\2\2\2lo\5\20\t\2mo\5\22\n\2nl\3\2\2\2"+
+		"nm\3\2\2\2o\17\3\2\2\2pq\7\60\2\2qr\7)\2\2rs\5\24\13\2st\7\'\2\2tu\5\26"+
+		"\f\2uv\7\'\2\2vw\5\30\r\2wx\7*\2\2xy\7\64\2\2yz\5\2\2\2z{\7\65\2\2{\21"+
+		"\3\2\2\2|}\7\61\2\2}~\7)\2\2~\177\5F$\2\177\u0080\7*\2\2\u0080\u0081\7"+
+		"\64\2\2\u0081\u0082\5\2\2\2\u0082\u0083\7\65\2\2\u0083\23\3\2\2\2\u0084"+
+		"\u0087\5B\"\2\u0085\u0087\5F$\2\u0086\u0084\3\2\2\2\u0086\u0085\3\2\2"+
+		"\2\u0087\25\3\2\2\2\u0088\u0089\5F$\2\u0089\27\3\2\2\2\u008a\u008b\5F"+
+		"$\2\u008b\31\3\2\2\2\u008c\u008d\7\62\2\2\u008d\u008e\7)\2\2\u008e\u008f"+
+		"\5F$\2\u008f\u0090\7*\2\2\u0090\u0091\7\64\2\2\u0091\u0092\5\2\2\2\u0092"+
+		"\u0098\7\65\2\2\u0093\u0094\7\63\2\2\u0094\u0095\7\64\2\2\u0095\u0096"+
+		"\5\2\2\2\u0096\u0097\7\65\2\2\u0097\u0099\3\2\2\2\u0098\u0093\3\2\2\2"+
+		"\u0098\u0099\3\2\2\2\u0099\33\3\2\2\2\u009a\u00a4\5$\23\2\u009b\u00a4"+
+		"\5&\24\2\u009c\u00a4\5(\25\2\u009d\u00a4\5*\26\2\u009e\u00a4\5\66\34\2"+
+		"\u009f\u00a4\58\35\2\u00a0\u00a4\5:\36\2\u00a1\u00a4\5<\37\2\u00a2\u00a4"+
+		"\5> \2\u00a3\u009a\3\2\2\2\u00a3\u009b\3\2\2\2\u00a3\u009c\3\2\2\2\u00a3"+
+		"\u009d\3\2\2\2\u00a3\u009e\3\2\2\2\u00a3\u009f\3\2\2\2\u00a3\u00a0\3\2"+
+		"\2\2\u00a3\u00a1\3\2\2\2\u00a3\u00a2\3\2\2\2\u00a4\35\3\2\2\2\u00a5\u00a6"+
+		"\7\3\2\2\u00a6\u00a7\7)\2\2\u00a7\u00a8\7*\2\2\u00a8\37\3\2\2\2\u00a9"+
+		"\u00aa\7\4\2\2\u00aa\u00ab\7)\2\2\u00ab\u00ac\7*\2\2\u00ac!\3\2\2\2\u00ad"+
+		"\u00ae\7\5\2\2\u00ae\u00af\7)\2\2\u00af\u00b0\7*\2\2\u00b0#\3\2\2\2\u00b1"+
+		"\u00b2\7\23\2\2\u00b2\u00b3\7$\2\2\u00b3\u00b4\7)\2\2\u00b4\u00b5\7#\2"+
+		"\2\u00b5\u00b6\7(\2\2\u00b6\u00b7\7#\2\2\u00b7\u00b8\7*\2\2\u00b8%\3\2"+
+		"\2\2\u00b9\u00ba\7\24\2\2\u00ba\u00bb\7$\2\2\u00bb\u00bc\7)\2\2\u00bc"+
+		"\u00bd\5H%\2\u00bd\u00be\7(\2\2\u00be\u00bf\5H%\2\u00bf\u00c0\7*\2\2\u00c0"+
+		"\'\3\2\2\2\u00c1\u00c2\7\25\2\2\u00c2\u00c3\7$\2\2\u00c3\u00c4\7)\2\2"+
+		"\u00c4\u00c5\5H%\2\u00c5\u00c6\7(\2\2\u00c6\u00c7\5H%\2\u00c7\u00c8\7"+
+		"*\2\2\u00c8)\3\2\2\2\u00c9\u00ca\7\26\2\2\u00ca\u00cb\7$\2\2\u00cb\u00cc"+
+		"\7)\2\2\u00cc\u00cd\5H%\2\u00cd\u00ce\7(\2\2\u00ce\u00cf\5H%\2\u00cf\u00d0"+
+		"\7(\2\2\u00d0\u00d1\5H%\2\u00d1\u00d6\7*\2\2\u00d2\u00d3\7\22\2\2\u00d3"+
+		"\u00d5\5.\30\2\u00d4\u00d2\3\2\2\2\u00d5\u00d8\3\2\2\2\u00d6\u00d4\3\2"+
+		"\2\2\u00d6\u00d7\3\2\2\2\u00d7\u0114\3\2\2\2\u00d8\u00d6\3\2\2\2\u00d9"+
+		"\u00da\7\26\2\2\u00da\u00db\7$\2\2\u00db\u00dc\7)\2\2\u00dc\u00dd\5,\27"+
+		"\2\u00dd\u00de\7(\2\2\u00de\u00df\5,\27\2\u00df\u00e0\7(\2\2\u00e0\u00e1"+
+		"\5,\27\2\u00e1\u00e6\7*\2\2\u00e2\u00e3\7\22\2\2\u00e3\u00e5\5.\30\2\u00e4"+
+		"\u00e2\3\2\2\2\u00e5\u00e8\3\2\2\2\u00e6\u00e4\3\2\2\2\u00e6\u00e7\3\2"+
+		"\2\2\u00e7\u0114\3\2\2\2\u00e8\u00e6\3\2\2\2\u00e9\u00ea\7\26\2\2\u00ea"+
+		"\u00eb\7$\2\2\u00eb\u00ec\7)\2\2\u00ec\u00ed\7#\2\2\u00ed\u00ee\7(\2\2"+
+		"\u00ee\u00ef\7#\2\2\u00ef\u00f0\7(\2\2\u00f0\u00f1\7#\2\2\u00f1\u00f6"+
+		"\7*\2\2\u00f2\u00f3\7\22\2\2\u00f3\u00f5\5.\30\2\u00f4\u00f2\3\2\2\2\u00f5"+
+		"\u00f8\3\2\2\2\u00f6\u00f4\3\2\2\2\u00f6\u00f7\3\2\2\2\u00f7\u0114\3\2"+
+		"\2\2\u00f8\u00f6\3\2\2\2\u00f9\u00fa\7\30\2\2\u00fa\u00fb\7$\2\2\u00fb"+
+		"\u00fc\7)\2\2\u00fc\u00fd\7#\2\2\u00fd\u0102\7*\2\2\u00fe\u00ff\7\22\2"+
+		"\2\u00ff\u0101\5.\30\2\u0100\u00fe\3\2\2\2\u0101\u0104\3\2\2\2\u0102\u0100"+
+		"\3\2\2\2\u0102\u0103\3\2\2\2\u0103\u0114\3\2\2\2\u0104\u0102\3\2\2\2\u0105"+
+		"\u0106\7\31\2\2\u0106\u0107\7$\2\2\u0107\u0108\7)\2\2\u0108\u0109\7#\2"+
+		"\2\u0109\u010a\7(\2\2\u010a\u010b\7#\2\2\u010b\u0110\7*\2\2\u010c\u010d"+
+		"\7\22\2\2\u010d\u010f\5.\30\2\u010e\u010c\3\2\2\2\u010f\u0112\3\2\2\2"+
+		"\u0110\u010e\3\2\2\2\u0110\u0111\3\2\2\2\u0111\u0114\3\2\2\2\u0112\u0110"+
+		"\3\2\2\2\u0113\u00c9\3\2\2\2\u0113\u00d9\3\2\2\2\u0113\u00e9\3\2\2\2\u0113"+
+		"\u00f9\3\2\2\2\u0113\u0105\3\2\2\2\u0114+\3\2\2\2\u0115\u0116\7$\2\2\u0116"+
+		"\u0117\7\6\2\2\u0117\u0118\7#\2\2\u0118-\3\2\2\2\u0119\u011d\5\60\31\2"+
+		"\u011a\u011d\5\62\32\2\u011b\u011d\5\64\33\2\u011c\u0119\3\2\2\2\u011c"+
+		"\u011a\3\2\2\2\u011c\u011b\3\2\2\2\u011d/\3\2\2\2\u011e\u011f\7 \2\2\u011f"+
+		"\u0120\7)\2\2\u0120\u0121\7$\2\2\u0121\u0122\7*\2\2\u0122\61\3\2\2\2\u0123"+
+		"\u0124\7!\2\2\u0124\u0125\7)\2\2\u0125\u0126\7$\2\2\u0126\u0127\7(\2\2"+
+		"\u0127\u0128\7#\2\2\u0128\u0129\7*\2\2\u0129\63\3\2\2\2\u012a\u012b\7"+
+		"\27\2\2\u012b\u012c\7)\2\2\u012c\u012d\7$\2\2\u012d\u0135\7*\2\2\u012e"+
+		"\u012f\7\27\2\2\u012f\u0130\7)\2\2\u0130\u0131\7$\2\2\u0131\u0132\7(\2"+
+		"\2\u0132\u0133\7#\2\2\u0133\u0135\7*\2\2\u0134\u012a\3\2\2\2\u0134\u012e"+
+		"\3\2\2\2\u0135\65\3\2\2\2\u0136\u0137\7\32\2\2\u0137\u0138\7$\2\2\u0138"+
+		"\u0139\7)\2\2\u0139\u013a\7#\2\2\u013a\u0142\7*\2\2\u013b\u013c\7\32\2"+
+		"\2\u013c\u013d\7$\2\2\u013d\u013e\7\7\2\2\u013e\u013f\7\r\2\2\u013f\u0140"+
+		"\7#\2\2\u0140\u0142\7\'\2\2\u0141\u0136\3\2\2\2\u0141\u013b\3\2\2\2\u0142"+
+		"\67\3\2\2\2\u0143\u0144\7\33\2\2\u0144\u0145\7$\2\2\u0145\u0146\7)\2\2"+
+		"\u0146\u0147\7#\2\2\u0147\u0148\7(\2\2\u0148\u0149\7#\2\2\u0149\u0155"+
+		"\7*\2\2\u014a\u014b\7\33\2\2\u014b\u014c\7$\2\2\u014c\u014d\7\b\2\2\u014d"+
+		"\u014e\7\r\2\2\u014e\u014f\7#\2\2\u014f\u0150\7(\2\2\u0150\u0151\7\t\2"+
+		"\2\u0151\u0152\7\r\2\2\u0152\u0153\7#\2\2\u0153\u0155\7\'\2\2\u0154\u0143"+
+		"\3\2\2\2\u0154\u014a\3\2\2\2\u01559\3\2\2\2\u0156\u0157\7\34\2\2\u0157"+
+		"\u0158\7$\2\2\u0158\u0159\7)\2\2\u0159\u015a\7#\2\2\u015a\u015b\7(\2\2"+
+		"\u015b\u015c\7#\2\2\u015c\u015d\7(\2\2\u015d\u015e\7#\2\2\u015e\u015f"+
+		"\7*\2\2\u015f;\3\2\2\2\u0160\u0161\7\35\2\2\u0161\u0162\7$\2\2\u0162\u0163"+
+		"\7)\2\2\u0163\u0164\7#\2\2\u0164\u0165\7*\2\2\u0165=\3\2\2\2\u0166\u0167"+
+		"\7\36\2\2\u0167\u0168\7$\2\2\u0168\u0169\7)\2\2\u0169\u016a\7#\2\2\u016a"+
+		"\u016b\7(\2\2\u016b\u016c\7#\2\2\u016c\u016d\7*\2\2\u016d?\3\2\2\2\u016e"+
+		"\u016f\7\37\2\2\u016f\u0170\7$\2\2\u0170\u0171\7)\2\2\u0171\u0172\7#\2"+
+		"\2\u0172\u0173\7*\2\2\u0173A\3\2\2\2\u0174\u0175\5D#\2\u0175\u0178\7$"+
+		"\2\2\u0176\u0177\7\r\2\2\u0177\u0179\5F$\2\u0178\u0176\3\2\2\2\u0178\u0179"+
+		"\3\2\2\2\u0179C\3\2\2\2\u017a\u017b\t\2\2\2\u017bE\3\2\2\2\u017c\u017d"+
+		"\b$\1\2\u017d\u0187\7#\2\2\u017e\u0187\7+\2\2\u017f\u0187\7,\2\2\u0180"+
+		"\u0187\7-\2\2\u0181\u0187\7$\2\2\u0182\u0183\7)\2\2\u0183\u0184\5F$\2"+
+		"\u0184\u0185\7*\2\2\u0185\u0187\3\2\2\2\u0186\u017c\3\2\2\2\u0186\u017e"+
+		"\3\2\2\2\u0186\u017f\3\2\2\2\u0186\u0180\3\2\2\2\u0186\u0181\3\2\2\2\u0186"+
+		"\u0182\3\2\2\2\u0187\u018d\3\2\2\2\u0188\u0189\f\4\2\2\u0189\u018a\t\3"+
+		"\2\2\u018a\u018c\5F$\5\u018b\u0188\3\2\2\2\u018c\u018f\3\2\2\2\u018d\u018b"+
+		"\3\2\2\2\u018d\u018e\3\2\2\2\u018eG\3\2\2\2\u018f\u018d\3\2\2\2\u0190"+
+		"\u0191\7$\2\2\u0191I\3\2\2\2\u0192\u0193\t\4\2\2\u0193K\3\2\2\2\27QS\\"+
+		"jn\u0086\u0098\u00a3\u00d6\u00e6\u00f6\u0102\u0110\u0113\u011c\u0134\u0141"+
+		"\u0154\u0178\u0186\u018d";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
