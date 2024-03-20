@@ -56,6 +56,53 @@ Example:
 ### Geometry DSL Syntax
 The DSL syntax is defined in ANTLR grammar format. It supports basic geometric shapes and operations.
 
+## Tokens and Types
+
+- **Basic Tokens**: 
+  - The DSL defines basic tokens such as `POINT`, `LINE`, `TRIANGLE`, etc., to represent geometric figures.
+  - Numerical values are represented by the `NUM` token, and identifiers for figures or points are captured by the `ID` token.
+
+- **Operation Tokens**: 
+  - Tokens like `PLUS`, `MINUS`, `MUL`, and `DIV` are used for arithmetic operations.
+  - The `ARROW` token is used for method calls on geometric entities.
+
+## Statements and Declarations
+
+- **Figure Declarations**: 
+  - Figures like points, lines, triangles, and circles are declared using their respective tokens followed by an identifier and parameters. 
+  - Example: `Point A(1, 2);` declares a point, and `Line AB(A, B);` declares a line between points A and B.
+
+- **Complex Figures**: 
+  - The grammar supports declarations of more complex figures like `SQUARE`, `RECTANGLE`, `ELLIPSE`, etc., with the necessary parameters for their construction.
+
+## Functionality and Operations
+
+- **Geometric Operations**: 
+  - The DSL supports operations like `bisector`, `angle`, and `height` for figures like triangles. 
+  - These operations are specified using an arrow notation, e.g., `Triangle t1(A, B, C)->bisector(A)`.
+
+- **Arithmetic and Logical Expressions**: 
+  - The grammar allows for arithmetic and logical expressions to facilitate more complex calculations and conditions within the DSL.
+
+## Control Structures
+
+- **Loops and Conditional Statements**: 
+  - For control flow, the DSL includes `for` and `while` loops, as well as `if-else` conditional statements, allowing users to create dynamic and conditional geometric constructions.
+
+## Comments and Whitespace
+
+- **Comments**: 
+  - Both single-line (`//`) and multi-line (`/* */`) comments are supported, allowing users to annotate their code for better readability.
+
+- **Whitespace**: 
+  - Whitespace characters are ignored in the parsing process, ensuring that the layout of the DSL code does not affect its execution.
+
+## Extensibility and Flexibility
+
+The grammar is designed to be extensible, allowing for the addition of new geometric entities and operations as needed. This design supports a wide range of geometric constructions and analyses, making the DSL a powerful tool for educational and professional purposes in the field of geometry.
+
+By integrating these elements, your Geometry DSL provides a comprehensive and user-friendly platform for geometric figure creation and manipulation, supported by a robust and flexible ANTLR grammar.
+
 ## Creating Points and Lines
 
 ```plaintext
