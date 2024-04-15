@@ -1,4 +1,4 @@
-package org.dsl.geometry.compiler;
+package org.dsl.geometry.compiler.services;
 
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
