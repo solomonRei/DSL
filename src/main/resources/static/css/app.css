@@ -1,0 +1,162 @@
+body {
+    padding: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dark-mode {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+.light-mode {
+    background-color: #ffffff;
+    color: #343a40;
+}
+
+#editor, #result {
+    height: 90vh;
+}
+
+#editor {
+    margin-right: 10px;
+}
+
+.editor-area {
+    height: 80%;
+    background-color: #f8f9fa;
+    color: #495057;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    line-height: 1.5;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dark-mode .editor-area {
+    background-color: #495057;
+    color: #f8f9fa;
+}
+
+.btn-compile {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.container-fluid {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 0;
+}
+
+.flex-item {
+    flex: 1;
+}
+
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+}
+
+.theme-switch input {
+    display: none;
+}
+
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.cm-error {
+    color: red;
+    text-decoration: underline;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tool-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #555;
+    padding: 5px 10px;
+}
+
+.tool-btn:hover, .tool-btn:focus {
+    color: #333;
+    background-color: #ddd;
+    outline: none;
+}
+input[type="color"], input[type="range"] {
+    height: 34px;
+    border: none;
+    vertical-align: middle;
+    margin: 0 5px;
+}
+
+input[type="range"] {
+    width: 100px;
+}
+
+.tool-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #333;
+    padding: 5px 10px;
+}
+
+.tool-btn:hover, .tool-btn:focus {
+    color: #333;
+    background-color: #ddd;
+    outline: none;
+}

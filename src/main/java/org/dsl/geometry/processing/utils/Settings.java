@@ -29,4 +29,6 @@ public class Settings {
 
   /** Show the name of the vertices */
   public static final boolean SHOW_NAME_OF_VERTICES = true;
+
+  public static float scale = 3.0f;
 }

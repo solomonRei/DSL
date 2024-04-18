@@ -3,124 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>DSL Компилятор</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/theme/darcula.min.css">
-    <style>
-
-        body {
-            padding: 20px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .dark-mode {
-            background-color: #343a40;
-            color: #ffffff;
-        }
-
-        .light-mode {
-            background-color: #ffffff;
-            color: #343a40;
-        }
-
-        #editor, #result {
-            height: 90vh;
-        }
-
-        #editor {
-            margin-right: 10px;
-        }
-
-        .editor-area {
-            height: 80%;
-            background-color: #f8f9fa;
-            color: #495057;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 16px;
-            line-height: 1.5;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .dark-mode .editor-area {
-            background-color: #495057;
-            color: #f8f9fa;
-        }
-
-        .btn-compile {
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .container-fluid {
-            display: flex;
-            flex-wrap: nowrap;
-            padding: 0;
-        }
-
-        .flex-item {
-            flex: 1;
-        }
-
-        .theme-switch-wrapper {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .theme-switch {
-            display: inline-block;
-            height: 34px;
-            position: relative;
-            width: 60px;
-        }
-
-        .theme-switch input {
-            display: none;
-        }
-
-        .slider {
-            background-color: #ccc;
-            bottom: 0;
-            cursor: pointer;
-            left: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-            transition: .4s;
-        }
-
-        .slider:before {
-            background-color: #fff;
-            bottom: 4px;
-            content: "";
-            height: 26px;
-            left: 4px;
-            position: absolute;
-            transition: .4s;
-            width: 26px;
-        }
-
-        input:checked + .slider {
-            background-color: #2196F3;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        .slider.round {
-            border-radius: 34px;
-        }
-
-        .slider.round:before {
-            border-radius: 50%;
-        }
-
-        .cm-error {
-            color: red;
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/app.css">
 </head>
 <body class="light-mode">
 
@@ -136,6 +23,35 @@
 <div class="container-fluid">
     <div class="flex-item" id="editor">
         <h1>Введите ваш DSL код</h1>
+        <div class="toolbar">
+            <button class="tool-btn" id="drawSquare" title="Квадрат"><i class="fa fa-square"></i></button>
+            <button class="tool-btn dropdown-btn" id="drawTriangle" title="Треугольник">
+                <i class="fa fa-play"></i>
+                <div class="dropdown-content">
+                    <a href="#" class="triangle-type" data-type="Equilateral">Равносторонний</a>
+                    <a href="#" class="triangle-type" data-type="Isosceles">Равнобедренный</a>
+                    <a href="#" class="triangle-type" data-type="Obtuse">Тупоугольный</a>
+                    <a href="#" class="triangle-type" data-type="Acute">Остроугольный</a>
+                </div>
+            </button>
+
+            <button class="tool-btn" id="drawCircle" title="Круг"><i class="fa fa-circle"></i></button>
+            <button class="tool-btn" id="drawRectangle" title="Прямоугольник"><i class="fa fa-rectangle-landscape"></i>
+            </button>
+            <button class="tool-btn" id="drawEllipse" title="Эллипс"><i class="fa fa-ellipsis-h"></i></button>
+            <button class="tool-btn" id="drawLine" title="Линия"><i class="fa fa-minus"></i></button>
+            <button class="tool-btn" id="drawPolygon" title="Многоугольник"><i class="fa fa-draw-polygon"></i></button>
+            <button class="tool-btn" id="drawText" title="Текст"><i class="fa fa-font"></i></button>
+            <button class="tool-btn" id="drawSector" title="Сектор"><i class="fa fa-chart-pie"></i></button>
+            <button class="tool-btn" id="showGrid" title="Сетка"><i class="fa fa-th"></i></button>
+            <button class="tool-btn" id="zoomIn" title="Увеличить"><i class="fa fa-search-plus"></i></button>
+            <button class="tool-btn" id="zoomOut" title="Уменьшить"><i class="fa fa-search-minus"></i></button>
+            <button class="tool-btn" id="clearCanvas" title="Очистить"><i class="fa fa-trash"></i></button>
+            <!-- Color pickers for fill and stroke -->
+            <input type="color" id="fillColor" title="Цвет заливки">
+            <input type="color" id="strokeColor" title="Цвет контура">
+            <input type="range" id="lineWidth" min="1" max="10" title="Толщина линии">
+        </div>
         <textarea id="dslCode" class="form-control editor-area" rows="10" placeholder="Введите код здесь..."></textarea><br>
         <button id="compileBtn" class="btn btn-primary btn-compile">Компилировать</button>
     </div>
@@ -223,6 +139,50 @@
             }
         });
 
+        $('#drawSquare').click(function () {
+            editor.replaceSelection('Square();\n');
+        });
+        $('#drawTriangle').click(function () {
+            editor.replaceSelection('Point A(0, 0);\n' +
+                'Point B(400, 0);\n' +
+                'Point C(0, 300);\n' +
+                'Triangle t1(A, B, C);\n');
+        });
+        $('.triangle-type').click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var type = $(this).data('type');
+            editor.replaceSelection(type + ' Triangle();\n');
+        });
+        $('#drawCircle').click(function () {
+            editor.replaceSelection('Circle();\n');
+        });
+        $('#drawRectangle').click(function () {
+            editor.replaceSelection('Rectangle();\n');
+        });
+        $('#drawEllipse').click(function () {
+            editor.replaceSelection('Ellipse();\n');
+        });
+
+        $('#drawLine').click(function () {
+            editor.replaceSelection('Line();\n');
+        });
+        $('#drawPolygon').click(function () {
+            editor.replaceSelection('Polygon();\n');
+        });
+        // Add similar event handlers for other buttons
+        $('#showGrid').click(function () {
+            // Toggle grid visibility
+        });
+        $('#zoomIn').click(function () {
+            // Increase zoom level
+        });
+        $('#zoomOut').click(function () {
+            // Decrease zoom level
+        });
+        $('#clearCanvas').click(function () {
+            // Clear the drawing area
+        });
     });
 </script>
 </body>

@@ -15,10 +15,12 @@ public class Line implements Shape {
 
   @Override
   public void draw(Graphics2D g) {
+    g.setStroke(new BasicStroke(3));
     g.setColor(Color.BLACK);
     g.drawLine((int) start.getX(), (int) start.getY(), (int) end.getX(), (int) end.getY());
 
     start.draw(g);
     end.draw(g);
+    g.setStroke(new BasicStroke(1));
   }
 }
