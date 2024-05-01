@@ -1,4 +1,4 @@
-// Generated from org/dsl/geometry/grammar/Geometry.g4 by ANTLR 4.7.1
+// Generated from org\dsl\geometry\grammar\Geometry.g4 by ANTLR 4.7.1
 package org.dsl.geometry.grammar;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -220,6 +220,102 @@ public class GeometryBaseListener implements GeometryListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAreaTriangleCall(GeometryParser.AreaTriangleCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAreaTriangleCall(GeometryParser.AreaTriangleCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAreaCircleCall(GeometryParser.AreaCircleCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAreaCircleCall(GeometryParser.AreaCircleCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAreaSquareCall(GeometryParser.AreaSquareCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAreaSquareCall(GeometryParser.AreaSquareCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAreaRectangleCall(GeometryParser.AreaRectangleCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAreaRectangleCall(GeometryParser.AreaRectangleCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPerimeterTriangleCall(GeometryParser.PerimeterTriangleCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPerimeterTriangleCall(GeometryParser.PerimeterTriangleCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPerimeterCircleCall(GeometryParser.PerimeterCircleCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPerimeterCircleCall(GeometryParser.PerimeterCircleCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPerimeterSquareCall(GeometryParser.PerimeterSquareCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPerimeterSquareCall(GeometryParser.PerimeterSquareCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPerimeterRectangleCall(GeometryParser.PerimeterRectangleCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPerimeterRectangleCall(GeometryParser.PerimeterRectangleCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterPointDeclaration(GeometryParser.PointDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -383,18 +479,6 @@ public class GeometryBaseListener implements GeometryListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitEllipseDeclaration(GeometryParser.EllipseDeclarationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRhombusDeclaration(GeometryParser.RhombusDeclarationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRhombusDeclaration(GeometryParser.RhombusDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

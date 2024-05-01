@@ -10,6 +10,7 @@ import org.dsl.geometry.processing.elements.Drawable;
 import org.dsl.geometry.processing.elements.shapes.impl.Point;
 import org.dsl.geometry.processing.elements.shapes.impl.Triangle;
 import org.dsl.geometry.processing.handlers.Handler;
+import org.dsl.geometry.processing.utils.GeometryEvaluator;
 import org.dsl.geometry.processing.utils.Utils;
 
 /** Triangle handler. */
@@ -17,6 +18,7 @@ import org.dsl.geometry.processing.utils.Utils;
 public class TriangleHandler implements Handler<GeometryParser.TriangleDeclarationContext> {
 
   private final List<Drawable> figures;
+  private final GeometryEvaluator evaluator = new GeometryEvaluator();
 
   public TriangleHandler(List<Drawable> figures) {
     this.figures = figures;
@@ -68,7 +70,7 @@ public class TriangleHandler implements Handler<GeometryParser.TriangleDeclarati
         .forEach(
             aliasCtx -> {
               String alias = aliasCtx.ID().getText();
-              float value = Float.parseFloat(aliasCtx.NUM().getText());
+              float value = Float.parseFloat(aliasCtx.expression().NUM().getText());
               aliases.put(alias, value);
             });
     return ShapeFactory.createTriangleWithAliases(aliases);
@@ -97,7 +99,7 @@ public class TriangleHandler implements Handler<GeometryParser.TriangleDeclarati
    * @return triangle
    */
   private Triangle createEquilateralTriangle(GeometryParser.TriangleDeclarationContext ctx) {
-    double side = Double.parseDouble(ctx.NUM(0).getText());
+    double side = evaluator.visit(ctx.expression(0));
     return ShapeFactory.createEquilateralTriangle(side);
   }
 
@@ -108,8 +110,8 @@ public class TriangleHandler implements Handler<GeometryParser.TriangleDeclarati
    * @return triangle
    */
   private Triangle createIsoscelesTriangle(GeometryParser.TriangleDeclarationContext ctx) {
-    double base = Double.parseDouble(ctx.NUM(0).getText());
-    double leg = Double.parseDouble(ctx.NUM(1).getText());
+    double base = evaluator.visit(ctx.expression(0));
+    double leg = evaluator.visit(ctx.expression(1));
     return ShapeFactory.createIsoscelesTriangle(base, leg);
   }
 
@@ -120,9 +122,9 @@ public class TriangleHandler implements Handler<GeometryParser.TriangleDeclarati
    * @return triangle
    */
   private Triangle createGeneralTriangle(GeometryParser.TriangleDeclarationContext ctx) {
-    double side1 = Double.parseDouble(ctx.NUM(0).getText());
-    double side2 = Double.parseDouble(ctx.NUM(1).getText());
-    double side3 = Double.parseDouble(ctx.NUM(2).getText());
+    double side1 = evaluator.visit(ctx.expression(0));
+    double side2 = evaluator.visit(ctx.expression(1));
+    double side3 = evaluator.visit(ctx.expression(2));
     return ShapeFactory.createTriangle(side1, side2, side3);
   }
 
@@ -167,8 +169,13 @@ public class TriangleHandler implements Handler<GeometryParser.TriangleDeclarati
    */
   private void addAngle(Triangle triangle, GeometryParser.AngleDeclarationContext angleCtx) {
     String vertexId = angleCtx.ID().getText();
-    double angle = Double.parseDouble(angleCtx.NUM().getText());
+    double angle = Double.parseDouble(angleCtx.expression().NUM().getText());
     triangle.setAngleAtVertex(vertexId, angle);
     log.info("Установлен угол " + angle + " для вершины: " + vertexId);
+  }
+
+  private double evaluateExpression(GeometryParser.ExpressionContext ctx) {
+    // Тут должен быть ваш код для вычисления выражения
+    return Double.parseDouble(ctx.getText()); // Простой пример
   }
 }

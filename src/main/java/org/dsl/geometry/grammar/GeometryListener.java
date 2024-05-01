@@ -1,4 +1,4 @@
-// Generated from org/dsl/geometry/grammar/Geometry.g4 by ANTLR 4.7.1
+// Generated from org\dsl\geometry\grammar\Geometry.g4 by ANTLR 4.7.1
 package org.dsl.geometry.grammar;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -178,6 +178,86 @@ public interface GeometryListener extends ParseTreeListener {
 	 */
 	void exitDiagonalCall(GeometryParser.DiagonalCallContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GeometryParser#areaTriangleCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterAreaTriangleCall(GeometryParser.AreaTriangleCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#areaTriangleCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitAreaTriangleCall(GeometryParser.AreaTriangleCallContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#areaCircleCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterAreaCircleCall(GeometryParser.AreaCircleCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#areaCircleCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitAreaCircleCall(GeometryParser.AreaCircleCallContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#areaSquareCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterAreaSquareCall(GeometryParser.AreaSquareCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#areaSquareCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitAreaSquareCall(GeometryParser.AreaSquareCallContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#areaRectangleCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterAreaRectangleCall(GeometryParser.AreaRectangleCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#areaRectangleCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitAreaRectangleCall(GeometryParser.AreaRectangleCallContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#perimeterTriangleCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterPerimeterTriangleCall(GeometryParser.PerimeterTriangleCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#perimeterTriangleCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitPerimeterTriangleCall(GeometryParser.PerimeterTriangleCallContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#perimeterCircleCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterPerimeterCircleCall(GeometryParser.PerimeterCircleCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#perimeterCircleCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitPerimeterCircleCall(GeometryParser.PerimeterCircleCallContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#perimeterSquareCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterPerimeterSquareCall(GeometryParser.PerimeterSquareCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#perimeterSquareCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitPerimeterSquareCall(GeometryParser.PerimeterSquareCallContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GeometryParser#perimeterRectangleCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterPerimeterRectangleCall(GeometryParser.PerimeterRectangleCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GeometryParser#perimeterRectangleCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitPerimeterRectangleCall(GeometryParser.PerimeterRectangleCallContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GeometryParser#pointDeclaration}.
 	 * @param ctx the parse tree
 	 */
@@ -317,16 +397,6 @@ public interface GeometryListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitEllipseDeclaration(GeometryParser.EllipseDeclarationContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link GeometryParser#rhombusDeclaration}.
-	 * @param ctx the parse tree
-	 */
-	void enterRhombusDeclaration(GeometryParser.RhombusDeclarationContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GeometryParser#rhombusDeclaration}.
-	 * @param ctx the parse tree
-	 */
-	void exitRhombusDeclaration(GeometryParser.RhombusDeclarationContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GeometryParser#variableDeclaration}.
 	 * @param ctx the parse tree

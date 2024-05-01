@@ -11,6 +11,7 @@ import org.dsl.geometry.processing.elements.Drawable;
 import org.dsl.geometry.processing.elements.shapes.impl.Line;
 import org.dsl.geometry.processing.elements.shapes.impl.Point;
 import org.dsl.geometry.processing.handlers.impl.TriangleHandler;
+import org.dsl.geometry.processing.utils.GeometryEvaluator;
 import org.dsl.geometry.processing.utils.Utils;
 
 /** Custom listener for parsing geometry language. */
@@ -20,6 +21,8 @@ public class CustomListener extends GeometryBaseListener {
 
   private final List<Drawable> figures = new ArrayList<>();
 
+  private final GeometryEvaluator evaluator = new GeometryEvaluator();
+
   /**
    * Method for entering point declaration.
    *
@@ -27,8 +30,8 @@ public class CustomListener extends GeometryBaseListener {
    */
   @Override
   public void enterPointDeclaration(GeometryParser.PointDeclarationContext ctx) {
-    float x = Float.parseFloat(ctx.NUM(0).getText());
-    float y = Float.parseFloat(ctx.NUM(1).getText());
+    float x = Float.parseFloat(String.valueOf(evaluator.visit(ctx.expression(0))));
+    float y = Float.parseFloat(String.valueOf(evaluator.visit(ctx.expression(1))));
     String id = ctx.ID().getText();
 
     Point point = ShapeFactory.createPoint(x, y, id);

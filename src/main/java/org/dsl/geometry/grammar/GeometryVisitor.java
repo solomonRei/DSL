@@ -1,4 +1,4 @@
-// Generated from org/dsl/geometry/grammar/Geometry.g4 by ANTLR 4.7.1
+// Generated from org\dsl\geometry\grammar\Geometry.g4 by ANTLR 4.7.1
 package org.dsl.geometry.grammar;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -113,6 +113,54 @@ public interface GeometryVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDiagonalCall(GeometryParser.DiagonalCallContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link GeometryParser#areaTriangleCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAreaTriangleCall(GeometryParser.AreaTriangleCallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#areaCircleCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAreaCircleCall(GeometryParser.AreaCircleCallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#areaSquareCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAreaSquareCall(GeometryParser.AreaSquareCallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#areaRectangleCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAreaRectangleCall(GeometryParser.AreaRectangleCallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#perimeterTriangleCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPerimeterTriangleCall(GeometryParser.PerimeterTriangleCallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#perimeterCircleCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPerimeterCircleCall(GeometryParser.PerimeterCircleCallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#perimeterSquareCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPerimeterSquareCall(GeometryParser.PerimeterSquareCallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GeometryParser#perimeterRectangleCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPerimeterRectangleCall(GeometryParser.PerimeterRectangleCallContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link GeometryParser#pointDeclaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -196,12 +244,6 @@ public interface GeometryVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitEllipseDeclaration(GeometryParser.EllipseDeclarationContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link GeometryParser#rhombusDeclaration}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRhombusDeclaration(GeometryParser.RhombusDeclarationContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GeometryParser#variableDeclaration}.
 	 * @param ctx the parse tree
