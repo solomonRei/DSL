@@ -190,3 +190,10 @@ input[type="range"] {
     pointer-events: none;
 }
 
+.canvas-container {
+    width: 800px;
+    height: 600px;
+    overflow: auto;
+}
+
+

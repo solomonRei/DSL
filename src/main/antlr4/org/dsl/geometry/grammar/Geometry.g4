@@ -144,8 +144,8 @@ rectangleDeclaration: RECTANGLE ID LPAREN expression COMMA expression RPAREN
 parallelogramDeclaration: PARALLELOGRAM ID LPAREN expression COMMA expression COMMA expression RPAREN;
 
 circleDeclaration: CIRCLE ID LPAREN expression COMMA expression RPAREN
-                 | CIRCLE ID 'radius' EQUAL expression SEMICOLON
-                 | CIRCLE ID 'center' EQUAL point COMMA 'radius' EQUAL expression SEMICOLON
+                 | CIRCLE ID 'radius' EQUAL expression
+                 | CIRCLE ID 'center' EQUAL point COMMA 'radius' EQUAL expression
                  | CIRCLE ID 'center' EQUAL LPAREN expression COMMA expression;
 ellipseDeclaration: ELLIPSE ID LPAREN expression COMMA expression RPAREN;
 

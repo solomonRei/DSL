@@ -173,9 +173,4 @@ public class TriangleHandler implements Handler<GeometryParser.TriangleDeclarati
     triangle.setAngleAtVertex(vertexId, angle);
     log.info("Установлен угол " + angle + " для вершины: " + vertexId);
   }
-
-  private double evaluateExpression(GeometryParser.ExpressionContext ctx) {
-    // Тут должен быть ваш код для вычисления выражения
-    return Double.parseDouble(ctx.getText()); // Простой пример
-  }
 }

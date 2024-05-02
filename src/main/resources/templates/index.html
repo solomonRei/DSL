@@ -58,7 +58,9 @@
     <div class="flex-item" id="result">
         <h1>Результат</h1>
         <iframe id="resultFrame" class="result-frame form-control" src="about:blank"></iframe>
-        <canvas id="myCanvas" width="800" height="600" style="border:1px solid #000;"></canvas>
+        <div class="canvas-container">
+            <canvas id="myCanvas" width="800" height="600" style="border:1px solid #000;"></canvas>
+        </div>
     </div>
 </div>
 
@@ -101,9 +103,8 @@
         var imgPath;
 
         function loadImage(url) {
-            var img = new Image(); // Создаем новый объект Image
+            var img = new Image();
             img.onload = function() {
-                // Масштабируем холст под размер изображения
                 canvas.width = img.width;
                 canvas.height = img.height;
                 ctx.drawImage(img, 0, 0); // Отрисовываем изображение на холсте
@@ -157,23 +158,23 @@
                 contentType: 'application/json',
                 data: JSON.stringify({dslCode: code}),
                 success: function (data) {
-                    loadImage(data.imagePath);
-                    imgPath = data.imagePath;
-                    // var resultFrame = $('#resultFrame');
-                    // resultFrame.attr('src', data.imagePath);
-                    //
-                    // resultFrame.on('load', function () {
-                    //     try {
-                    //         var body = resultFrame.contents().find('body');
-                    //         var image = body.find('img');
-                    //         console.log("image: ", image);
-                    //         var newHeight = image.height();
-                    //         console.log("newHeight: ", newHeight);
-                    //         resultFrame.height(newHeight + 'px');
-                    //     } catch (e) {
-                    //         console.error("Ошибка при изменении размера iframe: ", e);
-                    //     }
-                    // });
+                    // loadImage(data.imagePath);
+                    // imgPath = data.imagePath;
+                    var resultFrame = $('#resultFrame');
+                    resultFrame.attr('src', data.imagePath);
+
+                    resultFrame.on('load', function () {
+                        try {
+                            var body = resultFrame.contents().find('body');
+                            var image = body.find('img');
+                            console.log("image: ", image);
+                            var newHeight = image.height();
+                            console.log("newHeight: ", newHeight);
+                            resultFrame.height(newHeight + 'px');
+                        } catch (e) {
+                            console.error("Ошибка при изменении размера iframe: ", e);
+                        }
+                    });
                 },
                 error: function (error) {
                     console.error("Ошибка компиляции: ", error);

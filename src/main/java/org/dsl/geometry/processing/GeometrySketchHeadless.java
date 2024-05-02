@@ -34,15 +34,13 @@ public class GeometrySketchHeadless {
    * Method to draw a grid on the image.
    */
   private void drawGrid() {
-    int gridSize = 20; // Размер сетки в пикселях
-    g2.setColor(Color.GRAY); // Цвет сетки
+    int gridSize = 20;
+    g2.setColor(Color.GRAY);
 
-    // Рисуем вертикальные линии сетки
     for (int x = 0; x <= Settings.WINDOW_WIDTH; x += gridSize) {
       g2.drawLine(x, 0, x, Settings.WINDOW_HEIGHT);
     }
 
-    // Рисуем горизонтальные линии сетки
     for (int y = 0; y <= Settings.WINDOW_HEIGHT; y += gridSize) {
       g2.drawLine(0, y, Settings.WINDOW_WIDTH, y);
     }
