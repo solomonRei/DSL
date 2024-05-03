@@ -10,20 +10,21 @@ import org.dsl.geometry.processing.utils.Settings;
 import org.dsl.geometry.processing.utils.Utils;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class CircleHandler implements Handler<GeometryParser.CircleDeclarationContext> {
 
     private static final int DEFAULT_RADIUS = 50;
 
-    private final List<Drawable> figures;
+    private final Map<String, Drawable> figures;
 
-    public CircleHandler(List<Drawable> figures) {
+    public CircleHandler(Map<String, Drawable> figures) {
         this.figures = figures;
     }
 
     @Override
-    public List<Drawable> handle(GeometryParser.CircleDeclarationContext context) {
+    public Map<String, Drawable> handle(GeometryParser.CircleDeclarationContext context) {
         String circleId = context.ID().getText();
         Point center = parseCenter(context);
         double radius = parseRadius(context);
@@ -31,7 +32,7 @@ public class CircleHandler implements Handler<GeometryParser.CircleDeclarationCo
         Circle circle = new Circle(radius, center);
         if (circleId != null) {
             circle.scaleCircle();
-            figures.add(circle);
+            figures.put(circleId, circle);
             log.info("Added circle with ID {} at center ({}, {}) with radius {}", circleId, center.getX(), center.getY(), radius);
         } else {
             log.error("Circle ID is null");

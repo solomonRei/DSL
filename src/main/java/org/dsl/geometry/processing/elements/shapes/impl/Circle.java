@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.dsl.geometry.processing.elements.functions.BasicFunctions;
 import org.dsl.geometry.processing.elements.shapes.Shape;
 import org.dsl.geometry.processing.utils.Settings;
 
@@ -13,7 +14,7 @@ import java.awt.*;
 @Getter
 @Setter
 @ToString
-public class Circle implements Shape {
+public class Circle implements Shape, BasicFunctions {
 
     private double radius;
 
@@ -45,5 +46,19 @@ public class Circle implements Shape {
         this.center.setY((int)(this.center.getY() * Settings.scale + Settings.INITIAL_COORDINATE_Y));
 
         log.info("Scaled circle to new radius {} and center ({}, {})", radius, center.getX(), center.getY());
+    }
+
+    @Override
+    public double calculateArea() {
+        double area = Math.PI * radius * radius;
+        log.info("Calculated area of circle with radius {}: {}", radius, area);
+        return area;
+    }
+
+    @Override
+    public double calculatePerimeter() {
+        double perimeter = 2 * Math.PI * radius;
+        log.info("Calculated perimeter of circle with radius {}: {}", radius, perimeter);
+        return perimeter;
     }
 }

@@ -6,6 +6,7 @@ import org.dsl.geometry.grammar.GeometryBaseListener;
 import org.dsl.geometry.grammar.GeometryParser;
 import org.dsl.geometry.processing.elements.Drawable;
 import org.dsl.geometry.processing.elements.shapes.ShapeFactory;
+import org.dsl.geometry.processing.elements.shapes.impl.Circle;
 import org.dsl.geometry.processing.elements.shapes.impl.Line;
 import org.dsl.geometry.processing.elements.shapes.impl.Point;
 import org.dsl.geometry.processing.handlers.impl.CircleHandler;
@@ -13,8 +14,8 @@ import org.dsl.geometry.processing.handlers.impl.TriangleHandler;
 import org.dsl.geometry.processing.utils.GeometryEvaluator;
 import org.dsl.geometry.processing.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Custom listener for parsing geometry language.
@@ -23,7 +24,7 @@ import java.util.List;
 @Getter
 public class CustomListener extends GeometryBaseListener {
 
-    private final List<Drawable> figures = new ArrayList<>();
+    private final Map<String, Drawable> figures = new HashMap<>();
 
     private final GeometryEvaluator evaluator = new GeometryEvaluator();
 
@@ -39,7 +40,7 @@ public class CustomListener extends GeometryBaseListener {
         String id = ctx.ID().getText();
 
         Point point = ShapeFactory.createPoint(x, y, id);
-        figures.add(point);
+        figures.put(id, point);
 
         log.info("Добавлена точка: {} с идентификатором {}", point, id);
     }
@@ -59,7 +60,8 @@ public class CustomListener extends GeometryBaseListener {
 
         if (startPoint != null && endPoint != null) {
             Line line = ShapeFactory.createLine(startPoint, endPoint);
-            figures.add(line);
+            String id = ctx.ID().getText();
+            figures.put(id, line);
 
             log.info("Добавлена линия: " + line);
         } else {
@@ -75,8 +77,8 @@ public class CustomListener extends GeometryBaseListener {
     @Override
     public void enterTriangleDeclaration(GeometryParser.TriangleDeclarationContext ctx) {
         TriangleHandler triangleHandler = new TriangleHandler(figures);
-        List<Drawable> triangles = triangleHandler.handle(ctx);
-        figures.addAll(triangles);
+        Map<String, Drawable> triangles = triangleHandler.handle(ctx);
+        figures.putAll(triangles);
     }
 
     /**
@@ -87,9 +89,37 @@ public class CustomListener extends GeometryBaseListener {
     @Override
     public void enterCircleDeclaration(GeometryParser.CircleDeclarationContext ctx) {
         CircleHandler circleHandler = new CircleHandler(figures);
-        List<Drawable> circles = circleHandler.handle(ctx);
-        figures.addAll(circles);
+        Map<String, Drawable> circles = circleHandler.handle(ctx);
+        figures.putAll(circles);
     }
+
+    @Override
+    public void enterFunctionCall(GeometryParser.FunctionCallContext ctx) {
+        String shapeId = ctx.ID().getText();
+        Drawable shape = figures.get(shapeId);
+        if (shape == null) {
+            log.error("Фигура с ID {} не найдена.", shapeId);
+            return;
+        }
+
+        GeometryParser.FunctionDeclarationContext function = ctx.functionDeclaration();
+        handleFunction(shape, function);
+    }
+
+    private void handleFunction(Drawable shape, GeometryParser.FunctionDeclarationContext ctx) {
+        if ("area".equals(ctx.getStart().getText())) {
+            if (shape instanceof Circle) {
+                double area = ((Circle) shape).calculateArea();
+                log.info("Площадь круга {}: {}", shape, area);
+            }
+        } else if ("perimeter".equals(ctx.getStart().getText())) {
+            if (shape instanceof Circle) {
+                double perimeter = ((Circle) shape).calculatePerimeter();
+                log.info("Периметр круга {}: {}", shape, perimeter);
+            }
+        }
+    }
+
 
     /**
      * Method for entering comment statement.
