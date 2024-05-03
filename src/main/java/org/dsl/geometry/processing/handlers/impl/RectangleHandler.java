@@ -24,18 +24,14 @@ public class RectangleHandler implements Handler<GeometryParser.RectangleDeclara
         double width = 0;
         double height = 0;
 
-        // Parse based on the structure of the tree
         if (context.getChild(2).getText().equals("(")) {
-            // Handles the case: RECTANGLE ID LPAREN expression COMMA expression RPAREN
             width = Double.parseDouble(context.expression(0).getText());
             height = Double.parseDouble(context.expression(1).getText());
         } else if (context.getChild(2).getText().equals("width")) {
-            // Assuming 'width' keyword is the third child
-            width = Double.parseDouble(context.expression(0).getText()); // First expression after 'width'
-            // Assuming 'height' keyword comes after 'width', '=', first expression, and ','
-            height = Double.parseDouble(context.expression(1).getText()); // Second expression after 'height'
+            width = Double.parseDouble(context.expression(0).getText());
+            height = Double.parseDouble(context.expression(1).getText());
         } else {
-            System.err.println("Invalid rectangle declaration for ID: " + rectangleId);
+            System.err.println("Ошибка при создании прямоугольника ID: " + rectangleId);
             return figures;
         }
 
