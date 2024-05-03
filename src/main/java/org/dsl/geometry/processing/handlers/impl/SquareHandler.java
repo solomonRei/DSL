@@ -26,13 +26,13 @@ public class SquareHandler implements Handler<GeometryParser.SquareDeclarationCo
         if (context.expression() != null) {
             sideLength = Double.parseDouble(context.expression().getText());
         } else {
-            System.err.println("Invalid square declaration for ID: " + squareId);
+            System.err.println("Ошибка при создании квадрата с ID: " + squareId);
             return figures;
         }
 
         Point origin = new Point(Settings.INITIAL_COORDINATE_X, Settings.INITIAL_COORDINATE_Y, Utils.generateRandomId());
         Square square = new Square(sideLength, origin);
-        System.out.println("Creating square with ID: " + squareId + " and side length: " + sideLength);
+        System.out.println("Ошибка при создании квадрата с ID: " + squareId + " и стороной: " + sideLength);
         figures.put(squareId, square);
 
         return figures;

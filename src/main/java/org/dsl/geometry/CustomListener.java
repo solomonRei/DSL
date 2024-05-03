@@ -9,6 +9,7 @@ import org.dsl.geometry.processing.elements.shapes.ShapeFactory;
 import org.dsl.geometry.processing.elements.shapes.impl.Circle;
 import org.dsl.geometry.processing.elements.shapes.impl.Line;
 import org.dsl.geometry.processing.elements.shapes.impl.Point;
+import org.dsl.geometry.processing.elements.shapes.impl.Square;
 import org.dsl.geometry.processing.elements.shapes.impl.Triangle;
 import org.dsl.geometry.processing.handlers.impl.CircleHandler;
 import org.dsl.geometry.processing.handlers.impl.SquareHandler;
@@ -133,7 +134,11 @@ public class CustomListener extends GeometryBaseListener {
             } else if (shape instanceof Triangle) {
                 double area = ((Triangle) shape).calculateArea();
                 log.info("Площадь треугольника {}: {}", shape, area);
+            } else if (shape instanceof Square) {
+                double area = ((Square) shape).calculateArea();
+                log.info("Площадь квадрата {}: {}", shape, area);
             }
+
         } else if ("perimeter".equals(ctx.getStart().getText())) {
             if (shape instanceof Circle) {
                 double perimeter = ((Circle) shape).calculatePerimeter();
@@ -141,6 +146,9 @@ public class CustomListener extends GeometryBaseListener {
             } else if (shape instanceof Triangle) {
                 double perimeter = ((Triangle) shape).calculatePerimeter();
                 log.info("Периметр треугольника {}: {}", shape, perimeter);
+            } else if (shape instanceof Square) {
+                double perimeter = ((Square) shape).calculatePerimeter();
+                log.info("Периметр квадрата {}: {}", shape, perimeter);
             }
         }
     }
