@@ -9,6 +9,7 @@ import org.dsl.geometry.processing.elements.shapes.ShapeFactory;
 import org.dsl.geometry.processing.elements.shapes.impl.Circle;
 import org.dsl.geometry.processing.elements.shapes.impl.Line;
 import org.dsl.geometry.processing.elements.shapes.impl.Point;
+import org.dsl.geometry.processing.elements.shapes.impl.Triangle;
 import org.dsl.geometry.processing.handlers.impl.CircleHandler;
 import org.dsl.geometry.processing.handlers.impl.TriangleHandler;
 import org.dsl.geometry.processing.utils.GeometryEvaluator;
@@ -111,11 +112,17 @@ public class CustomListener extends GeometryBaseListener {
             if (shape instanceof Circle) {
                 double area = ((Circle) shape).calculateArea();
                 log.info("Площадь круга {}: {}", shape, area);
+            } else if (shape instanceof Triangle) {
+                double area = ((Triangle) shape).calculateArea();
+                log.info("Площадь треугольника {}: {}", shape, area);
             }
         } else if ("perimeter".equals(ctx.getStart().getText())) {
             if (shape instanceof Circle) {
                 double perimeter = ((Circle) shape).calculatePerimeter();
                 log.info("Периметр круга {}: {}", shape, perimeter);
+            } else if (shape instanceof Triangle) {
+                double perimeter = ((Triangle) shape).calculatePerimeter();
+                log.info("Периметр треугольника {}: {}", shape, perimeter);
             }
         }
     }

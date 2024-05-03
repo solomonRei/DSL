@@ -154,11 +154,24 @@ public class Triangle extends AbstractTriangle {
         p3.setY(p3.getY() + Settings.INITIAL_COORDINATE_Y);
     }
 
+    public double calculateArea() {
+        double s = (side1 + side2 + side3) / 2;
+        double area = Math.sqrt(s * (s - side1) * (s - side2) * (s - side3));
+        log.info("Площаль треугольника со сторонами {}, {}, {}: {}", side1, side2, side3, area);
+        return area;
+    }
+
+    public double calculatePerimeter() {
+        double perimeter = side1 + side2 + side3;
+        log.info("Площаль треугольника со сторонами {}, {}, {}: {}", side1, side2, side3, perimeter);
+        return perimeter;
+    }
 
     private void fillVerticesMap() {
         vertices.put(p1.getId(), p1);
         vertices.put(p2.getId(), p2);
         vertices.put(p3.getId(), p3);
     }
+
 
 }
