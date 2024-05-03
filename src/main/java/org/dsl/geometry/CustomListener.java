@@ -11,6 +11,7 @@ import org.dsl.geometry.processing.elements.shapes.impl.Line;
 import org.dsl.geometry.processing.elements.shapes.impl.Point;
 import org.dsl.geometry.processing.elements.shapes.impl.Triangle;
 import org.dsl.geometry.processing.handlers.impl.CircleHandler;
+import org.dsl.geometry.processing.handlers.impl.SquareHandler;
 import org.dsl.geometry.processing.handlers.impl.TriangleHandler;
 import org.dsl.geometry.processing.utils.GeometryEvaluator;
 import org.dsl.geometry.processing.utils.Utils;
@@ -94,6 +95,23 @@ public class CustomListener extends GeometryBaseListener {
         figures.putAll(circles);
     }
 
+    /**
+     * Method for entering square declaration.
+     *
+     * @param ctx context
+     */
+    @Override
+    public void enterSquareDeclaration(GeometryParser.SquareDeclarationContext ctx) {
+        SquareHandler squareHandler = new SquareHandler(figures);
+        Map<String, Drawable> squares = squareHandler.handle(ctx);
+        figures.putAll(squares);
+    }
+
+    /**
+     * Method for entering function call.
+     *
+     * @param ctx context
+     */
     @Override
     public void enterFunctionCall(GeometryParser.FunctionCallContext ctx) {
         String shapeId = ctx.ID().getText();
