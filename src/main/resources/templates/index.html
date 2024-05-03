@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/theme/darcula.min.css">
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 <body class="light-mode">
 
@@ -76,10 +77,38 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="textModal" tabindex="-1" role="dialog" aria-labelledby="textModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="textModalLabel">Enter Text</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="user-input-text">Text:</label>
+                        <textarea type="text" class="form-control" id="user-input-text" placeholder="Enter your text here..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveText">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/mode/clike/clike.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 
     CodeMirror.defineMode("mydsl", function () {
@@ -245,6 +274,47 @@
             } else if (type === "circleSecond") {
                 editor.replaceSelection('Circle c1 radius = 30;\n');
             }
+        });
+
+        $('#drawText').click(function() {
+            $('#textModal').modal('show');
+        });
+
+        $('#saveText').click(function() {
+            var userText = $('#user-input-text').val();
+            console.log("User entered: " + userText);
+            editor.replaceSelection("");
+            var requestData = {
+                "transcription": userText
+            };
+            $.ajax({
+                url: 'http://127.0.0.1:5000/structurize',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(requestData),
+                success: function(response) {
+                    console.log('Response:', response);
+                    if(response.code) {
+                        var formattedCode = response.code.replace(/;/g, ';\n');
+                        editor.replaceSelection(formattedCode);
+                    }
+                    $('#textModal').modal('hide');
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Data has been processed.',
+                        icon: 'success'
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                    $('#textModal').modal('hide');
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Failed to process data.',
+                        icon: 'error'
+                    });
+                }
+            });
         });
 
         $('#drawCircle').click(function () {
