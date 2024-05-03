@@ -12,6 +12,7 @@ import org.dsl.geometry.processing.elements.shapes.impl.Point;
 import org.dsl.geometry.processing.elements.shapes.impl.Square;
 import org.dsl.geometry.processing.elements.shapes.impl.Triangle;
 import org.dsl.geometry.processing.handlers.impl.CircleHandler;
+import org.dsl.geometry.processing.handlers.impl.RectangleHandler;
 import org.dsl.geometry.processing.handlers.impl.SquareHandler;
 import org.dsl.geometry.processing.handlers.impl.TriangleHandler;
 import org.dsl.geometry.processing.utils.GeometryEvaluator;
@@ -106,6 +107,18 @@ public class CustomListener extends GeometryBaseListener {
         SquareHandler squareHandler = new SquareHandler(figures);
         Map<String, Drawable> squares = squareHandler.handle(ctx);
         figures.putAll(squares);
+    }
+
+    /**
+     * Method for entering rectangle declaration.
+     *
+     * @param ctx context
+     */
+    @Override
+    public void enterRectangleDeclaration(GeometryParser.RectangleDeclarationContext ctx) {
+        RectangleHandler rectangleHandler = new RectangleHandler(figures);
+        Map<String, Drawable> rectangles = rectangleHandler.handle(ctx);
+        figures.putAll(rectangles);
     }
 
     /**
