@@ -30,15 +30,27 @@
                 <div class="dropdown-content">
                     <a href="#" class="triangle-type" data-type="Equilateral">Равносторонний</a>
                     <a href="#" class="triangle-type" data-type="Isosceles">Равнобедренный</a>
-                    <a href="#" class="triangle-type" data-type="Obtuse">Тупоугольный</a>
-                    <a href="#" class="triangle-type" data-type="Acute">Остроугольный</a>
+                    <a href="#" class="triangle-type" data-type="Obtuse">Со свойствами</a>
+                    <a href="#" class="triangle-type" data-type="Acute">Обычный</a>
                 </div>
             </button>
 
-            <button class="tool-btn" id="drawCircle" title="Круг"><i class="fa fa-circle"></i></button>
-            <button class="tool-btn" id="drawRectangle" title="Прямоугольник"><i class="fa fa-rectangle-landscape"></i>
+            <button class="tool-btn dropdown-btn" id="drawCircle" title="Круг">
+                <i class="fa fa-circle"></i>
+                <div class="dropdown-content">
+                    <a href="#" class="circle-type" data-type="circleFirst">1-й тип</a>
+                    <a href="#" class="circle-type" data-type="circleSecond">2-ой тип</a>
+                </div>
             </button>
-            <button class="tool-btn" id="drawEllipse" title="Эллипс"><i class="fa fa-ellipsis-h"></i></button>
+            <button class="tool-btn dropdown-btn" id="drawRectangle" title="Прямоугольник">
+                <i class="fa fa-square"></i>
+                <div class="dropdown-content">
+                    <a href="#" class="rectangle-type" data-type="rectangleFirst">1-й тип</a>
+                    <a href="#" class="rectangle-type" data-type="rectangleSecond">2-ой тип</a>
+                </div>
+            </button>
+            <button class="tool-btn" id="drawEllipse" title="Эллипс">
+                <i class="fa fa-ellipsis-h"></i></button>
             <button class="tool-btn" id="drawLine" title="Линия"><i class="fa fa-minus"></i></button>
             <button class="tool-btn" id="drawPolygon" title="Многоугольник"><i class="fa fa-draw-polygon"></i></button>
             <button class="tool-btn" id="drawText" title="Текст"><i class="fa fa-font"></i></button>
@@ -47,7 +59,7 @@
             <button class="tool-btn" id="zoomIn" title="Увеличить"><i class="fa fa-search-plus"></i></button>
             <button class="tool-btn" id="zoomOut" title="Уменьшить"><i class="fa fa-search-minus"></i></button>
             <button class="tool-btn" id="clearCanvas" title="Очистить"><i class="fa fa-trash"></i></button>
-            <!-- Color pickers for fill and stroke -->
+
             <input type="color" id="fillColor" title="Цвет заливки">
             <input type="color" id="strokeColor" title="Цвет контура">
             <input type="range" id="lineWidth" min="1" max="10" title="Толщина линии">
@@ -104,12 +116,12 @@
 
         function loadImage(url) {
             var img = new Image();
-            img.onload = function() {
+            img.onload = function () {
                 canvas.width = img.width;
                 canvas.height = img.height;
-                ctx.drawImage(img, 0, 0); // Отрисовываем изображение на холсте
+                ctx.drawImage(img, 0, 0);
             };
-            img.src = url; // Задаем источник изображения
+            img.src = url;
         }
 
         function drawGrid() {
@@ -193,7 +205,7 @@
         });
 
         $('#drawSquare').click(function () {
-            editor.replaceSelection('Square();\n');
+            editor.replaceSelection('Square sq1(100);\n');
         });
         $('#drawTriangle').click(function () {
             editor.replaceSelection('Point A(0, 0);\n' +
@@ -201,17 +213,45 @@
                 'Point C(0, 300);\n' +
                 'Triangle t1(A, B, C);\n');
         });
-        $('.triangle-type').click(function(e) {
+        $('.triangle-type').click(function (e) {
             e.preventDefault();
             e.stopPropagation();
             var type = $(this).data('type');
-            editor.replaceSelection(type + ' Triangle();\n');
+            if (type === "Equilateral") {
+                editor.replaceSelection('EquilateralTriangle t1(500);\n');
+            } else if (type === "Isosceles") {
+                editor.replaceSelection('IsoscelesTriangle t2(400, 600);\n');
+            } else if (type === "Obtuse") {
+                editor.replaceSelection('Triangle t1(S : 200, D : 300, E : 400)->bisector(S)->bisector(D);\n');
+            } else if (type === "Acute") {
+                editor.replaceSelection('Triangle t2(200, 300, 400);\n');
+            }
+        })
+        $('.rectangle-type').click(function (e) {
+            e.preventDefault();
+            var type = $(this).data('type');
+            if (type === "rectangleFirst") {
+                editor.replaceSelection('Rectangle rect1(200,300);\n');
+            } else if (type === "rectangleSecond") {
+                editor.replaceSelection('Rectangle rect2 width = 150, height = 250;\n');
+            }
         });
+        $('.circle-type').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var type = $(this).data('type');
+            if (type === "circleFirst") {
+                editor.replaceSelection('Circle c(10, 30);\n');
+            } else if (type === "circleSecond") {
+                editor.replaceSelection('Circle c1 radius = 30;\n');
+            }
+        });
+
         $('#drawCircle').click(function () {
-            editor.replaceSelection('Circle();\n');
+            editor.replaceSelection('Circle c(10, 30);\n');
         });
         $('#drawRectangle').click(function () {
-            editor.replaceSelection('Rectangle();\n');
+            editor.replaceSelection('Rectangle rect1(200,300);\n');
         });
         $('#drawEllipse').click(function () {
             editor.replaceSelection('Ellipse();\n');
